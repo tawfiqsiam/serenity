@@ -28,22 +28,22 @@ module.exports = class extends Command {
   async toggle(msg) {
     let check = msg.guild.settings.get('rankup.enabled');
     let boolean = check ? false : true
-    await msg.guild.settings.update('rankup.enabled', boolean);
+    await msg.guild.settings.update('levels.rankup.enabled', boolean);
     return msg.sendLocale('COMMAND_RANKUP_TOGGLE_SUCCESS', [boolean]);
   }
 
   async mode(msg, [input]) {
-    let check = msg.guild.settings.get('rankup.type');
+    let check = msg.guild.settings.get('levels.rankup.type');
     if (check === input) throw msg.language.get('COMMAND_RANKUP_MODE_EXISTS', input);
-    await msg.guild.settings.update('rankup.type', input);
+    await msg.guild.settings.update('levels.rankup.type', input);
     return msg.sendLocale('COMMAND_RANKUP_MODE_SUCCESS', [input]);
   }
 
   async text(msg, [...input]) {
     input = input.length > 0 ? input.join(' ') : input;
-    let check = msg.guild.settings.get('rankup.text');
+    let check = msg.guild.settings.get('levels.rankup.text');
     if (check === input) throw msg.language.get('COMMAND_RANKUP_MESSAGE_EXISTS', input);
-    await msg.guild.settings.update('rankup.text', input);
+    await msg.guild.settings.update('levels.rankup.text', input);
     if (!input.includes('%member' && '%level' || '%username' && '%level')) {
       let embed = new MessageEmbed()
         .setColor(this.client.config.colors.default)
@@ -55,14 +55,14 @@ module.exports = class extends Command {
 
   async channel(msg, [channel]) {
     if (channel == 'current') {
-      let check = msg.guild.settings.get('rankup.channel');
+      let check = msg.guild.settings.get('levels.rankup.channel');
       if (check === channel) throw msg.language.get('COMMAND_RANKUP_CHANNEL_CURRENT_EXISTS');
-      await msg.guild.settings.update('rankup.channel', channel);
+      await msg.guild.settings.update('levels.rankup.channel', channel);
       return msg.sendLocale('COMMAND_RANKUP_CHANNEL_CURRENT_SUCCESS')
     } else {
-      let check = msg.guild.settings.get('rankup.channel');
+      let check = msg.guild.settings.get('levels.rankup.channel');
       if (check === channel.id) throw msg.language.get('COMMAND_RANKUP_CHANNEL_EXISTS', channel.id);
-      await msg.guild.settings.update('rankup.channel', channel.id);
+      await msg.guild.settings.update('levels.rankup.channel', channel.id);
       return msg.sendLocale('COMMAND_RANKUP_CHANNEL_SUCCESS', [channel.id])
     }
   }

@@ -110,7 +110,7 @@ class Levels {
                   await this.setGuildMemberExp(member, entry.xp, true)
                }
             }
-            await guild.settings.update('multiplier', body.xp_rate)
+            await guild.settings.update('levels.multiplier', body.xp_rate)
             fulfill(true)
          })
       })
@@ -134,11 +134,11 @@ class Levels {
          const check = await msg.guild.settings.get('rankup.enabled')
          if (!check) return;
 
-         let type = msg.guild.settings.get('rankup.type')
-         let text = msg.guild.settings.get('rankup.text')
-         let dbChannel = msg.guild.settings.get('rankup.channel')
+         let type = msg.guild.settings.get('levels.rankup.type')
+         let text = msg.guild.settings.get('levels.rankup.text')
+         let dbChannel = msg.guild.settings.get('levels.rankup.channel')
          let getChannel = msg.guild.channels.get(dbChannel)
-         if (!getChannel) msg.guild.settings.reset('rankup.channel');
+         if (!getChannel) msg.guild.settings.reset('levels.rankup.channel');
 
          text = text.replace(/\%member/ig, member).replace(/\%username/ig, member.user.username).replace(/\%level/ig, newLvl);
 
