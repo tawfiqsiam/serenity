@@ -1,0 +1,21 @@
+{
+   "name": "serenity",
+   "version": "1.0.0",
+   "main": "src/Serenity.js",
+   "license": "MIT",
+   "scripts": {
+      "start": "node src/Serenity.js"
+   },
+   "dependencies": {
+      "canvas": "^2.6.1",
+      "canvas-constructor": "^3.2.0",
+      "d3-format": "^1.4.4",
+      "discord.js": "github:discordjs/discord.js#fe7df708e44e0280dfaf0f8e457b154781bb5140",
+      "dotenv": "^8.2.0",
+      "klasa": "github:dirigeants/klasa#settings",
+      "klasa-member-gateway": "github:dirigeants/klasa-member-gateway#fix-settings",
+      "moment": "^2.26.0",
+      "mongodb": "^3.5.7",
+      "request": "^2.88.2"
+   }
+}
