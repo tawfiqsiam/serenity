@@ -62,7 +62,7 @@ class Levels {
       if (moment().diff(user.timeout || 0) < 0) return;
       user.timeout = moment().add(1, 'minutes');
 
-      const oldExp = this.getGlobalExp(user);
+      const oldExp = await this.getGlobalExp(user);
       const newExp = oldExp + this.client.util.randomInt(15, 25);
 
       await this.setGlobalExp(user, newExp);
@@ -120,7 +120,7 @@ class Levels {
       if (moment().diff(member.timeout || 0) < 0) return;
       member.timeout = moment().add(1, 'minutes');
 
-      const multiplier = msg.guild.settings.get('multiplier');
+      const multiplier = msg.guild.settings.get('levels.multiplier');
       const oldExp = await this.getGuildMemberExp(member);
       const oldLvl = this.getLevelFromExp(oldExp);
       const newExp = oldExp + (this.client.util.randomInt(15, 25) * multiplier);

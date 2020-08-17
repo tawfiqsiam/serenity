@@ -10,6 +10,6 @@ module.exports = class extends Command {
    }
 
    async run(msg) {
-      msg.sendMessage("https://discord.com/oauth2/authorize/?permissions=1409666049&scope=bot&client_id=713054765025722440")
+      msg.sendMessage(this.client.invite)
    }
 }; 

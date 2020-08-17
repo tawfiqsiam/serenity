@@ -2,17 +2,18 @@ const { Command } = require('klasa');
 
 module.exports = class extends Command {
 
-   constructor(...args) {
-      super(...args, {
-         guarded: true,
-         permissionLevel: 10,
-         hidden: true,
-         description: language => language.get('COMMAND_PING_DESCRIPTION')
-      });
-   }
+  constructor(...args) {
+    super(...args, {
+      guarded: true,
+      permissionLevel: 10,
+      hidden: true,
+      description: language => language.get('COMMAND_PING_DESCRIPTION')
+    });
+  }
 
-   async run(msg) {
-      const message = await msg.sendLocale('COMMAND_PING');
-      return msg.sendLocale('COMMAND_PINGPONG', [(message.editedTimestamp || message.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp), Math.round(this.client.ws.ping)]);
-   }
+  async run(message) {
+    const msg = await message.sendLocale('COMMAND_PING');
+    return message.sendLocale('COMMAND_PINGPONG', [(msg.editedTimestamp || msg.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp), Math.round(this.client.ws.ping)]);
+  }
+
 };

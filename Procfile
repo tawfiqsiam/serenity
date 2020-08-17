@@ -1,1 +1,1 @@
-worker: node src/Serenity.js
+web: node src/Sharding.js

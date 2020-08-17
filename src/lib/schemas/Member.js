@@ -4,4 +4,4 @@ const MGateway = require('klasa-member-gateway');
 KlasaClient.use(MGateway);
 
 module.exports = KlasaClient.defaultMemberSchema
-   .add('exp', 'integer', { default: 0 })
+  .add('exp', 'integer', { default: 0 })

@@ -1,4 +1,4 @@
 module.exports =
-   require('./Guild'),
-   require('./Member'),
-   require('./User');
+  require('./Guild'),
+  require('./Member'),
+  require('./User');

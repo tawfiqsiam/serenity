@@ -4,7 +4,7 @@ module.exports = class Rewards {
    }
 
    async getGuildRewards(guild) {
-      let rewards = await guild.settings.get("rewards");
+      let rewards = await guild.settings.get("levels.rewards");
       let result = [];
       for (const reward of rewards) {
          let check = await guild.roles.get(reward.role);
@@ -18,19 +18,19 @@ module.exports = class Rewards {
    }
 
    async addGuildReward(guild, role, level) {
-      let rewards = await guild.settings.get('rewards');
+      let rewards = await guild.settings.get('levels.rewards');
       let object = {
          role: role,
          level: level
       };
-      await guild.settings.update('rewards', object, { arrayAction: 'add' });
+      await guild.settings.update('levels.rewards', object, { arrayAction: 'add' });
       return true;
    }
 
    async removeGuildReward(guild, role) {
-      let rewards = await guild.settings.get('rewards');
+      let rewards = await guild.settings.get('levels.rewards');
       let i = rewards.find((i) => i.role === role)
-      await guild.settings.update('rewards', i, { arrayAction: 'remove' });
+      await guild.settings.update('levels.rewards', i, { arrayAction: 'remove' });
       return true;
    }
 }
