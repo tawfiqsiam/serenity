@@ -1,26 +1,25 @@
-const { Command } = require('klasa');
+const { Command } = require('klasa')
 
 module.exports = class extends Command {
-
    constructor(...args) {
       super(...args, {
          description: 'Set a members rank.',
          permissionLevel: 10,
          hidden: true,
          usage: '<global|guild:default> (user:member) <level:integer>',
-         subcommands: true
+         subcommands: true,
       })
       this.createCustomResolver('member', async (args, possible, msg, [action]) => {
-         if (action === "guild") return this.client.arguments.get('member').run(args, possible, msg);
+         if (action === 'guild') return this.client.arguments.get('member').run(args, possible, msg)
          return this.client.arguments.get('user').run(args, possible, msg)
       })
-
    }
 
    async guild(msg, [member, level]) {
       const exp = await msg.client.levels.getExpFromLevel(level)
       setTimeout(async () => {
-         await msg.client.levels.setGuildMemberExp(member, exp, true)
+         await msg.client.levels
+            .setGuildMemberExp(member, exp, true)
             .then(() => {
                return msg.sendMessage(`${this.client.config.emojis.success} Rank updated for ${member.user.tag}.`)
             })
@@ -33,7 +32,8 @@ module.exports = class extends Command {
    async global(msg, [user, level]) {
       const exp = await msg.client.levels.getExpFromLevel(level)
       setTimeout(async () => {
-         await msg.client.levels.setGlobalExp(user, exp)
+         await msg.client.levels
+            .setGlobalExp(user, exp)
             .then(() => {
                return msg.sendMessage(`${this.client.config.emojis.success} Global rank updated for ${user.tag}.`)
             })
@@ -42,4 +42,4 @@ module.exports = class extends Command {
             })
       }, 200)
    }
-};
+}

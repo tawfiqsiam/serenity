@@ -1,21 +1,23 @@
-const { Language, util } = require('klasa');
-
+const { Language, util } = require('klasa')
 
 module.exports = class extends Language {
    constructor(...args) {
-      super(...args);
+      super(...args)
 
-      const error = this.client.config.emojis.error;
-      const success = this.client.config.emojis.success;
+      const error = this.client.config.emojis.error
+      const success = this.client.config.emojis.success
 
       this.language = {
          DEFAULT: (key) => `${key} has not been localized for en-US yet.`,
          DEFAULT_LANGUAGE: 'Default Language',
-         PREFIX_REMINDER: (prefix = `@${this.client.user.tag}`) => `The prefix${Array.isArray(prefix) ?
-            `es for this guild are: ${prefix.map(pre => `\`${pre}\``).join(', ')}` :
-            ` in this guild is set to: \`${prefix}\``
+         PREFIX_REMINDER: (prefix = `@${this.client.user.tag}`) =>
+            `The prefix${
+               Array.isArray(prefix)
+                  ? `es for this guild are: ${prefix.map((pre) => `\`${pre}\``).join(', ')}`
+                  : ` in this guild is set to: \`${prefix}\``
             }`,
-         RESOLVER_MULTI_TOO_FEW: (name, min = 1) => `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
+         RESOLVER_MULTI_TOO_FEW: (name, min = 1) =>
+            `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
          RESOLVER_INVALID_HEX: `${error} You provided an invalid hex.`,
          RESOLVER_INVALID_SEEK: `${error} You provided an invalid seek time. Examples: 00:30, 30:00, 01:30:00`,
          PAGE: 'Page',
@@ -56,24 +58,25 @@ module.exports = class extends Language {
          COMMAND_TRANSFER_TRANSFERRING: `Transferring data from MEE6.`,
          COMMAND_TRANSFER_DONE: `Transferred data.`,
          COMMAND_RANKUP_DESCRIPTION: `Manages the rank-up behaviour.`,
-         COMMAND_RANKUP_NO_POSSIBLES: possibles => `${error} Invalid or no option provided. Options: (${possibles})`,
+         COMMAND_RANKUP_NO_POSSIBLES: (possibles) => `${error} Invalid or no option provided. Options: (${possibles})`,
          COMMAND_RANKUP_NO_ACCESS: `${error} I don't have access to that channel.`,
-         COMMAND_RANKUP_TOGGLE_SUCCESS: (boolean) => `${success} The rank-up message has been toggled ${boolean ? "on" : "off"}.`,
-         COMMAND_RANKUP_MODE_EXISTS: mode => `${error} The rankup message type is already set to ${mode}.`,
-         COMMAND_RANKUP_MODE_SUCCESS: mode => `${success} The rankup message type has been set to ${mode}.`,
-         COMMAND_RANKUP_MESSAGE_EXISTS: message => `${error} The rankup message is already set to \`${message}\``,
-         COMMAND_RANKUP_MESSAGE_SUCCESS: message => `${success} The rankup message has been set to \`${message}\``,
+         COMMAND_RANKUP_TOGGLE_SUCCESS: (boolean) =>
+            `${success} The rank-up message has been toggled ${boolean ? 'on' : 'off'}.`,
+         COMMAND_RANKUP_MODE_EXISTS: (mode) => `${error} The rankup message type is already set to ${mode}.`,
+         COMMAND_RANKUP_MODE_SUCCESS: (mode) => `${success} The rankup message type has been set to ${mode}.`,
+         COMMAND_RANKUP_MESSAGE_EXISTS: (message) => `${error} The rankup message is already set to \`${message}\``,
+         COMMAND_RANKUP_MESSAGE_SUCCESS: (message) => `${success} The rankup message has been set to \`${message}\``,
          COMMAND_RANKUP_TEXT_MISSING: [
             `It looks like your rankup message doesnt contain enough variables.`,
             `This might confuse your members, you can use either %member with %level or %username with %level.\n\n`,
             `**%member:** <@713054765025722440>`,
             `**%username:** Serenity`,
-            `**%level:** 5`
+            `**%level:** 5`,
          ],
          COMMAND_RANKUP_CHANNEL_CURRENT_EXISTS: `${error} The rankup channel is already set to current.`,
          COMMAND_RANKUP_CHANNEL_CURRENT_SUCCESS: `${success} The rankup channel has been set to current. (In the channel that the rankup occurs)`,
-         COMMAND_RANKUP_CHANNEL_EXISTS: channel => `${error} The rankup channel is already set to <#${channel}>.`,
-         COMMAND_RANKUP_CHANNEL_SUCCESS: channel => `${success} The rankup channel has been set to <#${channel}>.`,
+         COMMAND_RANKUP_CHANNEL_EXISTS: (channel) => `${error} The rankup channel is already set to <#${channel}>.`,
+         COMMAND_RANKUP_CHANNEL_SUCCESS: (channel) => `${success} The rankup channel has been set to <#${channel}>.`,
          COMMAND_REWARD_DESCRIPTION: `Manages guild levelling rewards.`,
          COMMAND_REWARD_NO_PERMISSION: `${error} You don't have permission.`,
          COMMAND_REWARD_ADD_EXISTS: `${error} That role is already a reward.`,
@@ -85,11 +88,10 @@ module.exports = class extends Language {
          COMMAND_REWARD_LIST_REWARDS: `Levelling Rewards`,
          COMMAND_REWARD_LIST_LEVEL: `Level`,
          COMMAND_RANKCARD_DESCRIPTION: `Customize your rank card's color.`,
-         COMMAND_RANKCARD_EXISTS: color => `${error} Your rank card's color is already set to \`${color}\``,
-         COMMAND_RANKCARD_SUCCESS: color => `${success} Your rank card's color has been set to \`${color}\`.`,
+         COMMAND_RANKCARD_EXISTS: (color) => `${error} Your rank card's color is already set to \`${color}\``,
+         COMMAND_RANKCARD_SUCCESS: (color) => `${success} Your rank card's color has been set to \`${color}\`.`,
          COMMAND_RANKCARD_DEFAULT_EXISTS: `${error} Your rank card's color is already set to default.`,
          COMMAND_RANKCARD_DEFAULT_SUCCESS: `${success} Your rank card's color has been set to default.`,
-
 
          // Resolvers
          RESOLVER_INVALID_BOOL: `${error} You didn't provide true or false.`,
@@ -122,25 +124,40 @@ module.exports = class extends Language {
          COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${error} You didn't provide a ${name}.`,
          COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `${error} Missing a required option: (${possibles})`,
          COMMANDMESSAGE_NOMATCH: (possibles) => `${error} Invalid subcommand or none provided. Options: (${possibles})`,
-         MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) => `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join('**, **')}** to abort this prompt.`,
-         MONITOR_COMMAND_HANDLER_REPEATING_REPROMPT: (tag, name, time, cancelOptions) => `${tag} | **${name}** is a repeating argument | You have **${time}** seconds to respond to this prompt with additional valid arguments. Type **${cancelOptions.join('**, **')}** to cancel this prompt.`,
+         MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) =>
+            `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join(
+               '**, **'
+            )}** to abort this prompt.`,
+         MONITOR_COMMAND_HANDLER_REPEATING_REPROMPT: (tag, name, time, cancelOptions) =>
+            `${tag} | **${name}** is a repeating argument | You have **${time}** seconds to respond to this prompt with additional valid arguments. Type **${cancelOptions.join(
+               '**, **'
+            )}** to cancel this prompt.`,
          MONITOR_COMMAND_HANDLER_ABORTED: `Aborted`,
-         INHIBITOR_COOLDOWN: (remaining) => `${error} You have just used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
+         INHIBITOR_COOLDOWN: (remaining) =>
+            `${error} You have just used this command. You can use this command again in ${remaining} second${
+               remaining === 1 ? '' : 's'
+            }.`,
          INHIBITOR_DISABLED_GUILD: `${error} This command has been disabled by an admin in this guild.`,
          INHIBITOR_DISABLED_GLOBAL: `${error} This command has been globally disabled by the bot owner.`,
          INHIBITOR_MISSING_BOT_PERMS: (missing) => `${error} Insufficient permissions, missing: **${missing}**`,
          INHIBITOR_NSFW: `${error} You can only use this command in NSFW channels.`,
          INHIBITOR_PERMISSIONS: `${error} You do not have permission to use this command.`,
-         INHIBITOR_REQUIRED_SETTINGS: (settings) => `${error} The guild is missing the **${settings.join(', ')}** guild setting${settings.length !== 1 ? 's' : ''} and thus the command cannot run.`,
+         INHIBITOR_REQUIRED_SETTINGS: (settings) =>
+            `${error} The guild is missing the **${settings.join(', ')}** guild setting${
+               settings.length !== 1 ? 's' : ''
+            } and thus the command cannot run.`,
          INHIBITOR_RUNIN: (types) => `${error} This command is only available in ${types} channels.`,
          INHIBITOR_RUNIN_NONE: (name) => `${error} The ${name} command is not configured to run in any channel.`,
          COMMAND_BLACKLIST_DESCRIPTION: `Blacklists or un-blacklists users and guilds from the bot.`,
-         COMMAND_BLACKLIST_SUCCESS: (usersAdded, usersRemoved, guildsAdded, guildsRemoved) => [
-            usersAdded.length ? `**Users Added**\n${util.codeBlock('', usersAdded.join(', '))}` : '',
-            usersRemoved.length ? `**Users Removed**\n${util.codeBlock('', usersRemoved.join(', '))}` : '',
-            guildsAdded.length ? `**Guilds Added**\n${util.codeBlock('', guildsAdded.join(', '))}` : '',
-            guildsRemoved.length ? `**Guilds Removed**\n${util.codeBlock('', guildsRemoved.join(', '))}` : ''
-         ].filter(val => val !== '').join('\n'),
+         COMMAND_BLACKLIST_SUCCESS: (usersAdded, usersRemoved, guildsAdded, guildsRemoved) =>
+            [
+               usersAdded.length ? `**Users Added**\n${util.codeBlock('', usersAdded.join(', '))}` : '',
+               usersRemoved.length ? `**Users Removed**\n${util.codeBlock('', usersRemoved.join(', '))}` : '',
+               guildsAdded.length ? `**Guilds Added**\n${util.codeBlock('', guildsAdded.join(', '))}` : '',
+               guildsRemoved.length ? `**Guilds Removed**\n${util.codeBlock('', guildsRemoved.join(', '))}` : '',
+            ]
+               .filter((val) => val !== '')
+               .join('\n'),
          COMMAND_EVAL_DESCRIPTION: 'Evaluates arbitrary Javascript. Reserved for bot owner.',
          COMMAND_EVAL_EXTENDEDHELP: [
             'The eval command evaluates code as-in, any error thrown from it will be handled.',
@@ -149,15 +166,18 @@ module.exports = class extends Language {
             "The --depth flag accepts a number, for example, --depth=2, to customize util.inspect's depth.",
             'The --async flag will wrap the code into an async function where you can enjoy the use of await, however, if you want to return something, you will need the return keyword.',
             'The --showHidden flag will enable the showHidden option in util.inspect.',
-            'If the output is too large, it\'ll send the output as a file, or in the console if the bot does not have the ATTACH_FILES permission.'
+            "If the output is too large, it'll send the output as a file, or in the console if the bot does not have the ATTACH_FILES permission.",
          ].join('\n'),
          COMMAND_EVAL_ERROR: (time, output, type) => `**Error**:${output}\n**Type**:${type}\n${time}`,
          COMMAND_EVAL_OUTPUT: (time, output, type) => `**Output**:${output}\n**Type**:${type}\n${time}`,
-         COMMAND_EVAL_SENDFILE: (time, type) => `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
-         COMMAND_EVAL_SENDCONSOLE: (time, type) => `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
+         COMMAND_EVAL_SENDFILE: (time, type) =>
+            `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
+         COMMAND_EVAL_SENDCONSOLE: (time, type) =>
+            `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
          COMMAND_UNLOAD: (type, name) => `✅ Unloaded ${type}: ${name}`,
          COMMAND_UNLOAD_DESCRIPTION: 'Unloads the klasa piece.',
-         COMMAND_UNLOAD_WARN: 'You probably don\'t want to unload that, since you wouldn\'t be able to run any command to enable it again',
+         COMMAND_UNLOAD_WARN:
+            "You probably don't want to unload that, since you wouldn't be able to run any command to enable it again",
          COMMAND_RELOAD: (type, name, time) => `✅ Reloaded ${type}: ${name}. (Took: ${time})`,
          COMMAND_RELOAD_FAILED: (type, name) => `❌ Failed to reload ${type}: ${name}. Please check your Console.`,
          COMMAND_RELOAD_ALL: (type, time) => `✅ Reloaded all ${type}. (Took: ${time})`,
@@ -166,16 +186,15 @@ module.exports = class extends Language {
          COMMAND_REBOOT: 'Rebooting...',
          COMMAND_REBOOT_DESCRIPTION: 'Reboots the bot.',
          COMMAND_LOAD: (time, type, name) => `✅ Successfully loaded ${type}: ${name}. (Took: ${time})`,
-         COMMAND_LOAD_FAIL: 'The file does not exist, or an error occurred while loading your file. Please check your console.',
-         COMMAND_LOAD_ERROR: (type, name, error) => `❌ Failed to load ${type}: ${name}. Reason:${util.codeBlock('js', error)}`,
+         COMMAND_LOAD_FAIL:
+            'The file does not exist, or an error occurred while loading your file. Please check your console.',
+         COMMAND_LOAD_ERROR: (type, name, error) =>
+            `❌ Failed to load ${type}: ${name}. Reason:${util.codeBlock('js', error)}`,
          COMMAND_LOAD_DESCRIPTION: 'Load a piece from your bot.',
          COMMAND_PING: 'Ping?',
          COMMAND_PING_DESCRIPTION: 'Runs a connection test to Discord.',
          COMMAND_PINGPONG: (diff, ping) => `Pong! (Roundtrip took: ${diff}ms. Heartbeat: ${ping}ms.)`,
-         COMMAND_INVITE: () => [
-            `To add ${this.client.user.username} to your discord guild:`,
-            `<${this.client.invite}>`
-         ],
+         COMMAND_INVITE: () => [`To add ${this.client.user.username} to your discord guild:`, `<${this.client.invite}>`],
          COMMAND_INVITE_DESCRIPTION: 'Displays the invite link of the bot, to invite it to your guild.',
          COMMAND_INFO: [
             "Klasa is a 'plug-and-play' framework built on top of the Discord.js library.",
@@ -194,22 +213,25 @@ module.exports = class extends Language {
             '• ⏲ "Tasks", which can be scheduled to run in the future, optionally repeating',
             '',
             'We hope to be a 100% customizable framework that can cater to all audiences. We do frequent updates and bugfixes when available.',
-            "If you're interested in us, check us out at https://klasa.js.org"
+            "If you're interested in us, check us out at https://klasa.js.org",
          ],
          COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
          COMMAND_HELP_DM: '📥 | The list of commands you have access to has been sent to your DMs.',
-         COMMAND_HELP_NODM: '❌ | You have DMs disabled, I couldn\'t send you the commands in DMs.',
+         COMMAND_HELP_NODM: "❌ | You have DMs disabled, I couldn't send you the commands in DMs.",
          COMMAND_HELP_EXTENDED: 'Extended Help ::',
          COMMAND_ENABLE: (type, name) => `+ Successfully enabled ${type}: ${name}`,
-         COMMAND_ENABLE_DESCRIPTION: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state restored on reboot.',
+         COMMAND_ENABLE_DESCRIPTION:
+            'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state restored on reboot.',
          COMMAND_DISABLE: (type, name) => `+ Successfully disabled ${type}: ${name}`,
-         COMMAND_DISABLE_DESCRIPTION: 'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state restored on reboot.',
-         COMMAND_DISABLE_WARN: 'You probably don\'t want to disable that, since you wouldn\'t be able to run any command to enable it again',
+         COMMAND_DISABLE_DESCRIPTION:
+            'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state restored on reboot.',
+         COMMAND_DISABLE_WARN:
+            "You probably don't want to disable that, since you wouldn't be able to run any command to enable it again",
          COMMAND_CONF_NOKEY: 'You must provide a key',
          COMMAND_CONF_NOVALUE: 'You must provide a value',
          COMMAND_CONF_GUARDED: (name) => `${util.toTitleCase(name)} may not be disabled.`,
          COMMAND_CONF_UPDATED: (key, response) => `Successfully updated the key **${key}**: \`${response}\``,
-         COMMAND_CONF_KEY_NOT_ARRAY: 'This key is not array type. Use the action \'reset\' instead.',
+         COMMAND_CONF_KEY_NOT_ARRAY: "This key is not array type. Use the action 'reset' instead.",
          COMMAND_CONF_GET_NOEXT: (key) => `The key **${key}** does not seem to exist.`,
          COMMAND_CONF_GET: (key, value) => `The value for the key **${key}** is: \`${value}\``,
          COMMAND_CONF_RESET: (key, response) => `The key **${key}** has been reset to: \`${response}\``,
@@ -228,15 +250,15 @@ module.exports = class extends Language {
             `• Channels   :: ${channels}`,
             `• Klasa      :: v${klasaVersion}`,
             `• Discord.js :: v${discordVersion}`,
-            `• Node.js    :: ${processVersion}`
+            `• Node.js    :: ${processVersion}`,
          ],
          COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
          MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
-         TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel']
+         TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
       }
    }
 
    async init() {
-      await super.init();
+      await super.init()
    }
-} 
+}
