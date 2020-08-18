@@ -1,23 +1,23 @@
 {
-  "name": "serenity",
-  "version": "1.0.0",
-  "main": "src/Serenity.js",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "canvas": "^2.6.1",
-    "canvas-constructor": "^3.2.0",
-    "captcha-gen": "github:hellbound1337/captcha-gen",
-    "chalk": "^4.1.0",
-    "d3-format": "^1.4.4",
-    "discord.js": "github:discordjs/discord.js#fe7df70",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "klasa": "github:dirigeants/klasa#settings",
-    "klasa-member-gateway": "github:dirigeants/klasa-member-gateway#settings",
-    "moment": "^2.26.0",
-    "mongodb": "^3.5.8",
-    "request": "^2.88.2",
-    "util": "^0.12.3"
-  }
+   "name": "serenity",
+   "version": "1.0.0",
+   "main": "src/Serenity.js",
+   "license": "UNLICENSED",
+   "dependencies": {
+      "body-parser": "^1.19.0",
+      "canvas": "^2.6.1",
+      "canvas-constructor": "^3.2.0",
+      "captcha-gen": "github:hellbound1337/captcha-gen",
+      "chalk": "^4.1.0",
+      "d3-format": "^1.4.4",
+      "discord.js": "github:discordjs/discord.js#fe7df70",
+      "dotenv": "^8.2.0",
+      "express": "^4.17.1",
+      "klasa": "github:dirigeants/klasa#settings",
+      "klasa-member-gateway": "github:dirigeants/klasa-member-gateway#settings",
+      "moment": "^2.26.0",
+      "mongodb": "^3.5.8",
+      "request": "^2.88.2",
+      "util": "^0.12.3"
+   }
 }

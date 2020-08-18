@@ -6,43 +6,45 @@ exports.db = process.env.db
 exports.prefix = '$'
 
 exports.tokens = {
-  bot: process.env.botToken
+   bot: process.env.botToken,
 }
 
 exports.emojis = {
-  success: '<:success:695674669449216090>',
-  error: '<:error:695675079899742259>',
-  loading: '<a:loading:695675909943984219>'
+   success: '<:success:713079769155240006>',
+   error: '<:error:713079768723226674>',
+   loading: '<a:loading:713079771495530596>',
 }
 
 exports.colors = {
-  default: '#7B2BC0',
-  success: '#2ECC71',
-  error: '#FF5042'
+   default: '#A3C4FC',
+   success: '#2ECC71',
+   error: '#FF5042',
 }
 
-
 exports.options = {
-  prefix: this.prefix,
-  commandEditing: true,
-  createPiecesFolders: false,
-  owners: this.owners,
-  disabledEvents: ['TYPING_START', 'PRESENCE_UPDATE', 'TYPING_STOP'],
-  disabledCorePieces: ['commands', 'providers', 'languages'],
-  regexPrefix: /^((hey|hi|sup|yo) +)?(serenity)[,! ]/i,
-  partials: ['MESSAGE', 'REACTION'],
-  providers: { default: "mongodb" },
-  presence: {
-    activity: {
-      name: `$help`,
-      type: 'WATCHING'
-    }
-  },
-  pieceDefaults: {
-    commands: {
-      runIn: ['text'],
-      deletable: false,
-      quotedStringSupport: true
-    }
-  }
+   restTimeOffset: 0,
+   prefix: this.prefix,
+   owners: this.owners,
+   commandEditing: true,
+   createPiecesFolders: false,
+   partials: ['MESSAGE', 'REACTION'],
+   providers: {
+      default: 'mongodb',
+   },
+   regexPrefix: /^((hey|hi|sup|yo) +)?(serenity)[,! ]/i,
+   disabledCorePieces: ['commands', 'providers', 'languages'],
+   disabledEvents: ['TYPING_START', 'PRESENCE_UPDATE', 'TYPING_STOP'],
+   pieceDefaults: {
+      commands: {
+         runIn: ['text'],
+         deletable: false,
+         quotedStringSupport: true,
+      },
+   },
+   activity: {
+      presence: {
+         name: `$help`,
+         type: 'WATCHING',
+      },
+   },
 }

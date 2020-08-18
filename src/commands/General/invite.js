@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('klasa')
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -12,4 +12,4 @@ module.exports = class extends Command {
    async run(msg) {
       msg.sendMessage(this.client.invite)
    }
-}; 
+}
