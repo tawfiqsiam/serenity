@@ -3,6 +3,7 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = class extends Event {
    async run(channel, time) {
+      if (channel.type !== 'text') return
       let lc = channel.guild.settings.get('channels.logs')
       if (!lc) return
       let webhooks = await channel.guild.fetchWebhooks()
@@ -11,21 +12,21 @@ module.exports = class extends Event {
 
       if (!channel.guild.settings.get('toggles.logs.channels')) return
       if (
-         !['text', 'voice', 'category'].includes(channel.type) ||
+         !channel.guild.me.permissions.has('ADMINISTRATOR') ||
          !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
          !channel.guild.me.permissions.has('MANAGE_WEBHOOKS')
       )
          return
       const embed = new MessageEmbed()
-         .addField('Channel', channel)
-         .setColor(this.client.config.colors.default)
+         .addField('Channel', `${channel.name} (${channel})`)
+         .setColor('#FFFF00')
          .setTitle(`Pins Updated`)
-         .setAuthor('Unknown User', 'https://i.imgur.com/OGJoll2.png')
+         .setThumbnail('https://i.imgur.com/OGJoll2.png')
+         .setFooter('Executor: Unknown User')
          .setTimestamp()
       if (channel.type !== 'category') {
-         embed.addField('Parent', channel.parent.name, true)
+         embed.addField('Parent Category', channel.parent.name)
       }
-      embed.addField(`IDs`, util.codeBlock('ini', `Channel = ${channel.id}`))
       let log
       await channel.guild
          .fetchAuditLogs({ limit: 1 })
@@ -38,12 +39,8 @@ module.exports = class extends Event {
       let user = log.executor
       let member = channel.guild.members.get(user.id)
       if (new Date().getTime() - new Date(log.id / 4194304 + 1420070400000).getTime() < 3000) {
-         embed.setAuthor(`${user.tag} ${member && member.nick ? `(${member.nick})` : ''}`, await user.getAvatar())
-         // embed.setThumbnail(await user.getAvatar())
-         embed.fields[channel.type !== 'category' ? 2 : 1].value = util.codeBlock(
-            'ini',
-            `User = ${user.id} \nChannel = ${channel.id}`
-         )
+         embed.setFooter(`Executor: ${user.tag} ${member && member.nick ? `(${member.nick})` : ''}`)
+         embed.setThumbnail(await user.getAvatar())
          await logsChannel.send(embed)
       } else {
          await logsChannel.send(embed)
