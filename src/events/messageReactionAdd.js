@@ -20,29 +20,29 @@ module.exports = class extends Event {
                {
                   id: eRole,
                   deny: ['VIEW_CHANNEL'],
-                  type: 'role',
+                  type: 'role'
                },
                {
                   id: suppRole,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'role',
+                  type: 'role'
                },
                {
                   id: u.id,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'user',
+                  type: 'user'
                },
                {
                   id: this.client.user.id,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'user',
-               },
+                  type: 'user'
+               }
             ],
             position: r.message.channel.rawPosition,
             parent: r.message.channel.parent,
             // topic: created,
             resolved: false,
-            locked: false,
+            locked: false
          })
          r.message.guild.settings.update(
             'data.tickets',
@@ -53,7 +53,7 @@ module.exports = class extends Event {
                username: u.username,
                tag: u.tag,
                guild: r.message.guild.id,
-               createdTimestamp: Date.now(),
+               createdTimestamp: Date.now()
             },
             { arrayAction: 'add' }
          )
@@ -80,25 +80,25 @@ module.exports = class extends Event {
                {
                   id: eRole,
                   deny: ['VIEW_CHANNEL'],
-                  type: 'role',
+                  type: 'role'
                },
                {
                   id: suppRole,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'role',
+                  type: 'role'
                },
                {
                   id: filteredTicket.user,
                   allow: ['VIEW_CHANNEL'],
                   deny: ['SEND_MESSAGES'],
-                  type: 'user',
+                  type: 'user'
                },
                {
                   id: this.client.user.id,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'user',
-               },
-            ],
+                  type: 'user'
+               }
+            ]
          })
          // Update Ticket
          let newTicket = filteredTicket
@@ -115,24 +115,24 @@ module.exports = class extends Event {
                {
                   id: eRole,
                   deny: ['VIEW_CHANNEL'],
-                  type: 'role',
+                  type: 'role'
                },
                {
                   id: suppRole,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'role',
+                  type: 'role'
                },
                {
                   id: filteredTicket.user,
                   allow: ['VIEW_CHANNEL', 'SEND_MESSAGES'],
-                  type: 'user',
+                  type: 'user'
                },
                {
                   id: this.client.user.id,
                   allow: ['VIEW_CHANNEL'],
-                  type: 'user',
-               },
-            ],
+                  type: 'user'
+               }
+            ]
          })
          // Update Ticket
          let newTicket = filteredTicket
@@ -160,7 +160,7 @@ module.exports = class extends Event {
                embeds: m.embeds,
                // edits: m.edits,
                createdAt: m.createdAt,
-               createdTimestamp: m.createdTimestamp,
+               createdTimestamp: m.createdTimestamp
             })
             if (!usersList.includes(m.author.id) && m.author.id !== this.client.user.id) {
                usersList.push(m.author.id)

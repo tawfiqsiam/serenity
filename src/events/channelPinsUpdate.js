@@ -1,22 +1,21 @@
-const { Event, util } = require('klasa')
+const { Event } = require('klasa')
 const { MessageEmbed } = require('discord.js')
 
 module.exports = class extends Event {
-   async run(channel, time) {
-      if (channel.type !== 'text') return
+   async run(channel) {
+      if (
+         channel.type !== 'text' ||
+         !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
+         !channel.guild.me.permissions.has('MANAGE_WEBHOOKS') ||
+         !channel.guild.me.permissions.has('ADMINISTRATOR')
+      )
+         return
       let lc = channel.guild.settings.get('channels.logs')
       if (!lc) return
       let webhooks = await channel.guild.fetchWebhooks()
       let logsChannel = webhooks.get(lc)
       if (!logsChannel) return
-
       if (!channel.guild.settings.get('toggles.logs.channels')) return
-      if (
-         !channel.guild.me.permissions.has('ADMINISTRATOR') ||
-         !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
-         !channel.guild.me.permissions.has('MANAGE_WEBHOOKS')
-      )
-         return
       const embed = new MessageEmbed()
          .addField('Channel', `${channel.name} (${channel})`)
          .setColor('#FFFF00')

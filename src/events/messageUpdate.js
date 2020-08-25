@@ -3,12 +3,14 @@ const { MessageEmbed } = require('discord.js')
 
 module.exports = class extends Event {
    async run(oldMessage, message) {
-      if (message.partial || oldMessage.partial) {
+      if (
+         message.partial ||
+         oldMessage.partial ||
+         !oldMessage.content ||
+         !message.content ||
+         oldMessage.content === message.content
+      )
          return
-      }
-      if (!oldMessage.content || !message.content) {
-         return
-      }
       let lc = message.guild.settings.get('channels.logs')
       if (!lc) return
       let webhooks = await message.guild.fetchWebhooks()

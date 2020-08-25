@@ -3,47 +3,35 @@ const { MessageEmbed } = require('discord.js')
 const CHANNEL_TYPE = {
    text: 'Text channel',
    voice: 'Voice channel',
-   category: 'Category',
+   category: 'Category'
 }
 
 module.exports = class extends Event {
    async run(oldChannel, channel) {
+      if (
+         channel.type === 1 ||
+         channel.type === 3 ||
+         !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
+         !channel.guild.me.permissions.has('MANAGE_WEBHOOKS') ||
+         !channel.guild.me.permissions.has('ADMINISTRATOR')
+      )
+         return
       let lc = channel.guild.settings.get('channels.logs')
       if (!lc) return
       let webhooks = await channel.guild.fetchWebhooks()
       let logsChannel = webhooks.get(lc)
       if (!logsChannel) return
-
       if (!channel.guild.settings.get('toggles.logs.channels')) return
-      if (
-         !['text', 'voice', 'category'].includes(channel.type) ||
-         !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
-         !channel.guild.me.permissions.has('MANAGE_WEBHOOKS')
-      )
-         return
-      let changes = ''
-      let keys = Object.keys(diff(oldChannel, channel))
-      if (oldChannel.permissionOverwrites.size === channel.permissionOverwrites.size) {
-         keys.shift()
-      }
-      keys.forEach((change) => {
-         changes = changes.concat(change + ` \n`)
-      })
-      if (keys.length <= 0) {
-         return
-      }
-
       const embed = new MessageEmbed()
-         .addField('Name', channel.name)
-         .setColor(this.client.config.colors.yellow)
-         .addField('Changed', changes)
+         .addField('Channel', `${channel.name} (${channel})`)
+         .setColor('#FFFF00')
          .setTitle(`${CHANNEL_TYPE[channel.type]} Updated`)
-         .setAuthor('Unknown User', 'https://i.imgur.com/OGJoll2.png')
+         .setThumbnail('https://i.imgur.com/OGJoll2.png')
+         .setFooter('Executor: Unknown User')
          .setTimestamp()
       if (channel.type !== 'category') {
-         embed.addField('Parent', channel.parent.name, true)
+         embed.addField('Parent Category', channel.parent.name)
       }
-      embed.addField(`IDs`, util.codeBlock('ini', `Channel = ${channel.id}`))
       let log
       await channel.guild
          .fetchAuditLogs({ limit: 1 })
@@ -56,17 +44,19 @@ module.exports = class extends Event {
       let user = log.executor
       let member = channel.guild.members.get(user.id)
       if (new Date().getTime() - new Date(log.id / 4194304 + 1420070400000).getTime() < 3000) {
-         embed.setAuthor(`${user.tag} ${member && member.nick ? `(${member.nick})` : ''}`, await user.getAvatar())
-         // embed.setThumbnail(await user.getAvatar())
-         embed.fields[channel.type !== 'category' ? 3 : 2].value = util.codeBlock(
-            'ini',
-            `User = ${user.id} \nChannel = ${channel.id}`
-         )
+         embed.setFooter(`Executor: ${user.tag} ${member && member.nick ? `(${member.nick})` : ''}`)
+         embed.setThumbnail(await user.getAvatar())
          await logsChannel.send(embed)
       } else {
          await logsChannel.send(embed)
       }
    }
+}
+
+function getDifference(array1, array2) {
+   return array1.filter((i) => {
+      return array2.indexOf(i) < 0
+   })
 }
 
 function diff(obj1, obj2) {

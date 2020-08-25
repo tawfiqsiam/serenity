@@ -3,11 +3,18 @@ const { MessageEmbed } = require('discord.js')
 const CHANNEL_TYPE = {
    text: 'Text Channel',
    voice: 'Voice Channel',
-   category: 'Category',
+   category: 'Category'
 }
 
 module.exports = class extends Event {
    async run(channel) {
+      if (
+         !['text', 'voice', 'category'].includes(channel.type) ||
+         !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
+         !channel.guild.me.permissions.has('MANAGE_WEBHOOKS') ||
+         !channel.guild.me.permissions.has('ADMINISTRATOR')
+      )
+         return
       let lc = channel.guild.settings.get('channels.logs')
       if (!lc) return
       let webhooks = await channel.guild.fetchWebhooks()
@@ -15,13 +22,6 @@ module.exports = class extends Event {
       if (!logsChannel) return
 
       if (!channel.guild.settings.get('toggles.logs.channels')) return
-      if (
-         !['text', 'voice', 'category'].includes(channel.type) ||
-         !channel.guild.me.permissions.has('ADMINISTRATOR') ||
-         !channel.guild.me.permissions.has('VIEW_AUDIT_LOG') ||
-         !channel.guild.me.permissions.has('MANAGE_WEBHOOKS')
-      )
-         return
       const embed = new MessageEmbed()
          .addField('Name', channel.name)
          .addField('Position', channel.rawPosition)
