@@ -1,6 +1,6 @@
-const SerenityClient = require('./lib/Client')
-const { tokens, options } = require('./config')
+const SerenityClient = require('./lib/Client');
+const { tokens, options } = require('./config');
 
-const client = new SerenityClient(options)
+const client = new SerenityClient(options);
 
-client.login(tokens.bot)
+client.login(tokens.bot);

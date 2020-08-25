@@ -1,5 +1,5 @@
-const { Command } = require('klasa')
-const { MessageEmbed } = require('discord.js')
+const { Command } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -7,35 +7,35 @@ module.exports = class extends Command {
          description: (language) => language.get('COMMAND_IGNORE_DESCRIPTION'),
          usage: '<add|remove|list> (channel:channel) [xpgain:boolean] [commands:boolean]',
          requiredPermissions: ['EMBED_LINKS'],
-         subcommands: true,
-      })
+         subcommands: true
+      });
       this.createCustomResolver('channel', async (args, possible, msg, [action]) => {
-         if (action === 'list') return args
-         if (await msg.hasAtLeastPermissionLevel(6)) return this.client.arguments.get('channel').run(args, possible, msg)
-         throw msg.language.get('COMMAND_IGNORE_PERMISSION_DENIED')
-      })
+         if (action === 'list') return args;
+         if (await msg.hasAtLeastPermissionLevel(6)) return this.client.arguments.get('channel').run(args, possible, msg);
+         throw msg.language.get('COMMAND_IGNORE_PERMISSION_DENIED');
+      });
    }
 
    async add(msg, [channel, xp = false, commands = false]) {
-      let ignores = await this.getIgnores(msg.guild)
-      if (await ignores.find((o) => o.channel === channel)) throw msg.language.get('COMMAND_IGNORE_ADD_EXISTS')
-      await this.addIgnore(msg.guild, channel.id, xp, commands)
-      return msg.sendLocale('COMMAND_IGNORE_ADD_ADDED')
+      let ignores = await this.getIgnores(msg.guild);
+      if (await ignores.find((o) => o.channel === channel)) throw msg.language.get('COMMAND_IGNORE_ADD_EXISTS');
+      await this.addIgnore(msg.guild, channel.id, xp, commands);
+      return msg.sendLocale('COMMAND_IGNORE_ADD_ADDED');
    }
 
    async remove(msg, [channel]) {
-      let ignores = await this.getIgnores(msg.guild)
+      let ignores = await this.getIgnores(msg.guild);
       if (!(await ignores.find((o) => o.channel === channel))) {
-         throw msg.sendLocale('COMMAND_IGNORE_REMOVE_NO_EXISTS')
+         throw msg.sendLocale('COMMAND_IGNORE_REMOVE_NO_EXISTS');
       }
-      await this.removeIgnore(msg.guild, channel.id)
-      return msg.sendLocale('COMMAND_IGNORE_REMOVE_REMOVED')
+      await this.removeIgnore(msg.guild, channel.id);
+      return msg.sendLocale('COMMAND_IGNORE_REMOVE_REMOVED');
    }
 
    async list(msg) {
-      let ignores = await this.getIgnores(msg.guild)
+      let ignores = await this.getIgnores(msg.guild);
 
-      if (ignores.length == 0) throw msg.language.get('COMMAND_IGNORE_LIST_NONE')
+      if (ignores.length == 0) throw msg.language.get('COMMAND_IGNORE_LIST_NONE');
 
       let embed = new MessageEmbed()
          .setTitle(`${this.client.config.emojis.error} ${msg.language.get('COMMAND_IGNORE_IGNORES')}`)
@@ -48,38 +48,38 @@ module.exports = class extends Command {
                   }
             ${msg.language.get('COMMAND_IGNORE_COMMANDS')} ${
                      ignore.commands ? this.client.config.emojis.success : this.client.config.emojis.error
-                  }`
+                  }`;
                })
                .join('\n\n')
          )
-         .setColor(this.client.config.colors.default)
-      return msg.sendMessage(embed)
+         .setColor(this.client.config.colors.default);
+      return msg.sendMessage(embed);
    }
 
    async getIgnores(guild) {
-      let ignores = await guild.settings.get('ignores')
-      let result = []
+      let ignores = await guild.settings.get('ignores');
+      let result = [];
       for (const ignore of ignores) {
-         let check = await guild.channels.get(ignore.channel)
+         let check = await guild.channels.get(ignore.channel);
          if (!check) {
-            await this.removeIgnore(guild, ignore.channel)
+            await this.removeIgnore(guild, ignore.channel);
          } else {
-            result.push({ channel: check, xp: ignore.xp, commands: ignore.commands })
+            result.push({ channel: check, xp: ignore.xp, commands: ignore.commands });
          }
       }
-      return result
+      return result;
    }
 
    async addIgnore(guild, channel, xp, commands) {
-      let object = { channel: channel, commands: commands, xp: xp }
-      await guild.settings.update('ignores', object, { arrayAction: 'add' })
-      return true
+      let object = { channel: channel, commands: commands, xp: xp };
+      await guild.settings.update('ignores', object, { arrayAction: 'add' });
+      return true;
    }
 
    async removeIgnore(guild, channel) {
-      let ignores = await guild.settings.get('ignores')
-      let i = ignores.find((i) => i.channel === channel)
-      await guild.settings.update('ignores', i, { arrayAction: 'remove' })
-      return true
+      let ignores = await guild.settings.get('ignores');
+      let i = ignores.find((i) => i.channel === channel);
+      await guild.settings.update('ignores', i, { arrayAction: 'remove' });
+      return true;
    }
-}
+};

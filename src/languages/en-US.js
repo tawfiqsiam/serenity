@@ -1,11 +1,11 @@
-const { Language, util } = require('klasa')
+const { Language, util } = require('klasa');
 
 module.exports = class extends Language {
    constructor(...args) {
-      super(...args)
+      super(...args);
 
-      const error = this.client.config.emojis.error
-      const success = this.client.config.emojis.success
+      const error = this.client.config.emojis.error;
+      const success = this.client.config.emojis.success;
 
       this.language = {
          DEFAULT: (key) => `${key} has not been localized for en-US yet.`,
@@ -71,7 +71,7 @@ module.exports = class extends Language {
             `This might confuse your members, you can use either %member with %level or %username with %level.\n\n`,
             `**%member:** <@713054765025722440>`,
             `**%username:** Serenity`,
-            `**%level:** 5`,
+            `**%level:** 5`
          ],
          COMMAND_RANKUP_CHANNEL_CURRENT_EXISTS: `${error} The rankup channel is already set to current.`,
          COMMAND_RANKUP_CHANNEL_CURRENT_SUCCESS: `${success} The rankup channel has been set to current. (In the channel that the rankup occurs)`,
@@ -154,7 +154,7 @@ module.exports = class extends Language {
                usersAdded.length ? `**Users Added**\n${util.codeBlock('', usersAdded.join(', '))}` : '',
                usersRemoved.length ? `**Users Removed**\n${util.codeBlock('', usersRemoved.join(', '))}` : '',
                guildsAdded.length ? `**Guilds Added**\n${util.codeBlock('', guildsAdded.join(', '))}` : '',
-               guildsRemoved.length ? `**Guilds Removed**\n${util.codeBlock('', guildsRemoved.join(', '))}` : '',
+               guildsRemoved.length ? `**Guilds Removed**\n${util.codeBlock('', guildsRemoved.join(', '))}` : ''
             ]
                .filter((val) => val !== '')
                .join('\n'),
@@ -166,7 +166,7 @@ module.exports = class extends Language {
             "The --depth flag accepts a number, for example, --depth=2, to customize util.inspect's depth.",
             'The --async flag will wrap the code into an async function where you can enjoy the use of await, however, if you want to return something, you will need the return keyword.',
             'The --showHidden flag will enable the showHidden option in util.inspect.',
-            "If the output is too large, it'll send the output as a file, or in the console if the bot does not have the ATTACH_FILES permission.",
+            "If the output is too large, it'll send the output as a file, or in the console if the bot does not have the ATTACH_FILES permission."
          ].join('\n'),
          COMMAND_EVAL_ERROR: (time, output, type) => `**Error**:${output}\n**Type**:${type}\n${time}`,
          COMMAND_EVAL_OUTPUT: (time, output, type) => `**Output**:${output}\n**Type**:${type}\n${time}`,
@@ -213,7 +213,7 @@ module.exports = class extends Language {
             '• ⏲ "Tasks", which can be scheduled to run in the future, optionally repeating',
             '',
             'We hope to be a 100% customizable framework that can cater to all audiences. We do frequent updates and bugfixes when available.',
-            "If you're interested in us, check us out at https://klasa.js.org",
+            "If you're interested in us, check us out at https://klasa.js.org"
          ],
          COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
          COMMAND_HELP_DM: '📥 | The list of commands you have access to has been sent to your DMs.',
@@ -250,15 +250,15 @@ module.exports = class extends Language {
             `• Channels   :: ${channels}`,
             `• Klasa      :: v${klasaVersion}`,
             `• Discord.js :: v${discordVersion}`,
-            `• Node.js    :: ${processVersion}`,
+            `• Node.js    :: ${processVersion}`
          ],
          COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
          MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
-         TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
-      }
+         TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel']
+      };
    }
 
    async init() {
-      await super.init()
+      await super.init();
    }
-}
+};

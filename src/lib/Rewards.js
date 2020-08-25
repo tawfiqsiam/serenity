@@ -1,36 +1,36 @@
 module.exports = class Rewards {
    constructor(client) {
-      this.client = client
+      this.client = client;
    }
 
    async getGuildRewards(guild) {
-      let rewards = await guild.settings.get('rewards')
-      let result = []
+      let rewards = await guild.settings.get('rewards');
+      let result = [];
       for (const reward of rewards) {
-         let check = await guild.roles.get(reward.role)
+         let check = await guild.roles.get(reward.role);
          if (!check || guild.me.roles.highest.rawPosition < check.rawPosition) {
-            await this.removeGuildReward(guild, reward.role)
+            await this.removeGuildReward(guild, reward.role);
          } else {
-            result.push({ role: check, level: reward.level })
+            result.push({ role: check, level: reward.level });
          }
       }
-      return result
+      return result;
    }
 
    async addGuildReward(guild, role, level) {
-      let rewards = await guild.settings.get('rewards')
+      let rewards = await guild.settings.get('rewards');
       let object = {
          role: role,
-         level: level,
-      }
-      await guild.settings.update('rewards', object, { arrayAction: 'add' })
-      return true
+         level: level
+      };
+      await guild.settings.update('rewards', object, { arrayAction: 'add' });
+      return true;
    }
 
    async removeGuildReward(guild, role) {
-      let rewards = await guild.settings.get('rewards')
-      let i = rewards.find((i) => i.role === role)
-      await guild.settings.update('rewards', i, { arrayAction: 'remove' })
-      return true
+      let rewards = await guild.settings.get('rewards');
+      let i = rewards.find((i) => i.role === role);
+      await guild.settings.update('rewards', i, { arrayAction: 'remove' });
+      return true;
    }
-}
+};

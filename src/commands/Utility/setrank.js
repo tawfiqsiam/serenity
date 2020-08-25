@@ -1,4 +1,4 @@
-const { Command } = require('klasa')
+const { Command } = require('klasa');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -7,39 +7,39 @@ module.exports = class extends Command {
          permissionLevel: 10,
          hidden: true,
          usage: '<global|guild:default> (user:member) <level:integer>',
-         subcommands: true,
-      })
+         subcommands: true
+      });
       this.createCustomResolver('member', async (args, possible, msg, [action]) => {
-         if (action === 'guild') return this.client.arguments.get('member').run(args, possible, msg)
-         return this.client.arguments.get('user').run(args, possible, msg)
-      })
+         if (action === 'guild') return this.client.arguments.get('member').run(args, possible, msg);
+         return this.client.arguments.get('user').run(args, possible, msg);
+      });
    }
 
    async guild(msg, [member, level]) {
-      const exp = await msg.client.levels.getExpFromLevel(level)
+      const exp = await msg.client.levels.getExpFromLevel(level);
       setTimeout(async () => {
          await msg.client.levels
             .setGuildMemberExp(member, exp, true)
             .then(() => {
-               return msg.sendMessage(`${this.client.config.emojis.success} Rank updated for ${member.user.tag}.`)
+               return msg.sendMessage(`${this.client.config.emojis.success} Rank updated for ${member.user.tag}.`);
             })
             .catch(() => {
-               return msg.sendMessage(`${this.client.config.emojis.error} Couldn't update rank for ${member.user.tag}`)
-            })
-      }, 200)
+               return msg.sendMessage(`${this.client.config.emojis.error} Couldn't update rank for ${member.user.tag}`);
+            });
+      }, 200);
    }
 
    async global(msg, [user, level]) {
-      const exp = await msg.client.levels.getExpFromLevel(level)
+      const exp = await msg.client.levels.getExpFromLevel(level);
       setTimeout(async () => {
          await msg.client.levels
             .setGlobalExp(user, exp)
             .then(() => {
-               return msg.sendMessage(`${this.client.config.emojis.success} Global rank updated for ${user.tag}.`)
+               return msg.sendMessage(`${this.client.config.emojis.success} Global rank updated for ${user.tag}.`);
             })
             .catch(() => {
-               return msg.sendMessage(`${this.client.config.emojis.error} Couldn't update global rank for ${user.tag}`)
-            })
-      }, 200)
+               return msg.sendMessage(`${this.client.config.emojis.error} Couldn't update global rank for ${user.tag}`);
+            });
+      }, 200);
    }
-}
+};

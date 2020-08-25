@@ -1,10 +1,10 @@
-const { MessageAttachment } = require('discord.js')
-const { Canvas } = require('canvas-constructor')
-const { Command } = require('klasa')
-const fetch = require('node-fetch')
-const d3 = require('d3-format')
-const toPercentage = (current, total) => Math.round((current / total) * 515)
-const format = (number) => (number > 999 ? d3.format('.3s')(number) : number)
+const { MessageAttachment } = require('discord.js');
+const { Canvas } = require('canvas-constructor');
+const { Command } = require('klasa');
+const fetch = require('node-fetch');
+const d3 = require('d3-format');
+const toPercentage = (current, total) => Math.round((current / total) * 515);
+const format = (number) => (number > 999 ? d3.format('.3s')(number) : number);
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -12,23 +12,23 @@ module.exports = class extends Command {
          description: (language) => language.get('COMMAND_RANK_DESCRIPTION'),
          requiredPermissions: ['ATTACH_FILES'],
          usage: '<global|server:default> [member:member] [...]',
-         subcommands: true,
-      })
+         subcommands: true
+      });
    }
 
    async server(msg, [member = msg.member]) {
-      const data = await msg.client.levels.getGuildLeaderboard(msg.guild)
-      const filteredData = data.filter((member) => member.exp !== 0)
-      const currentExp = await msg.client.levels.getGuildMemberExp(member)
-      const currentRank = filteredData.map((e) => e.member).indexOf(member.id) + 1
-      const currentLevel = await msg.client.levels.getLevelFromExp(currentExp)
-      const levelExp = await msg.client.levels.getLevelExp(currentLevel)
-      const currentLevelExp = await msg.client.levels.getLevelProgress(currentExp)
+      const data = await msg.client.levels.getGuildLeaderboard(msg.guild);
+      const filteredData = data.filter((member) => member.exp !== 0);
+      const currentExp = await msg.client.levels.getGuildMemberExp(member);
+      const currentRank = filteredData.map((e) => e.member).indexOf(member.id) + 1;
+      const currentLevel = await msg.client.levels.getLevelFromExp(currentExp);
+      const levelExp = await msg.client.levels.getLevelExp(currentLevel);
+      const currentLevelExp = await msg.client.levels.getLevelProgress(currentExp);
 
       if (currentExp == 0) {
          throw msg.member.id === member.id
             ? msg.language.get('COMMAND_RANK_SELF_UNRANKED')
-            : msg.language.get('COMMAND_RANK_USER_UNRANKED')
+            : msg.language.get('COMMAND_RANK_USER_UNRANKED');
       }
 
       const attachment = new MessageAttachment(
@@ -40,25 +40,25 @@ module.exports = class extends Command {
             member.user,
             member.user.settings.get('rankcard')
          )
-      )
-      msg.sendMessage(attachment)
+      );
+      msg.sendMessage(attachment);
    }
 
    async global(msg, [member = msg.member]) {
-      const provider = this.client.providers.get('mongodb')
-      const collection = await provider.db.collection('users')
-      const findAll = await collection.find({}, { sort: { exp: -1 }, limit: 100 }).toArray()
-      const index = findAll.map((a) => a.id).indexOf(member.user.id) + 1
-      const currentExp = await msg.client.levels.getGlobalExp(member.user)
-      const currentRank = index === 0 ? '100+' : index
-      const currentLevel = await msg.client.levels.getLevelFromExp(currentExp)
-      const levelExp = await msg.client.levels.getLevelExp(currentLevel)
-      const currentLevelExp = await msg.client.levels.getLevelProgress(currentExp)
+      const provider = this.client.providers.get('mongodb');
+      const collection = await provider.db.collection('users');
+      const findAll = await collection.find({}, { sort: { exp: -1 }, limit: 100 }).toArray();
+      const index = findAll.map((a) => a.id).indexOf(member.user.id) + 1;
+      const currentExp = await msg.client.levels.getGlobalExp(member.user);
+      const currentRank = index === 0 ? '100+' : index;
+      const currentLevel = await msg.client.levels.getLevelFromExp(currentExp);
+      const levelExp = await msg.client.levels.getLevelExp(currentLevel);
+      const currentLevelExp = await msg.client.levels.getLevelProgress(currentExp);
 
       if (currentExp == 0) {
          throw msg.member.id === member.id
             ? msg.language.get('COMMAND_RANK_SELF_UNRANKED')
-            : msg.language.get('COMMAND_RANK_USER_UNRANKED')
+            : msg.language.get('COMMAND_RANK_USER_UNRANKED');
       }
 
       const attachment = new MessageAttachment(
@@ -70,20 +70,20 @@ module.exports = class extends Command {
             member.user,
             member.user.settings.get('rankcard')
          )
-      )
-      return msg.sendMessage(attachment)
+      );
+      return msg.sendMessage(attachment);
    }
 
    async generate(current, total, rank, level, user, color) {
-      current = current.toString()
-      total = total.toString()
-      rank = rank.toString()
-      level = level.toString()
-      color = color.toString()
+      current = current.toString();
+      total = total.toString();
+      rank = rank.toString();
+      level = level.toString();
+      color = color.toString();
 
-      let correctX = 0
-      const avatar = await fetch(user.getAvatar()).then((res) => res.buffer())
-      let canvas = new Canvas(934, 282)
+      let correctX = 0;
+      const avatar = await fetch(user.getAvatar()).then((res) => res.buffer());
+      let canvas = new Canvas(934, 282);
       canvas
          .setTextFont('Lucida Sans')
          .setColor(`#1c1c1c`)
@@ -133,18 +133,18 @@ module.exports = class extends Command {
          .setTextAlign('center')
          .setShadowColor('black')
          .setShadowBlur(5)
-         .addText(`Level ${level} | #${rank}`, 400 + (875 - 400) / 2, 230, 322)
+         .addText(`Level ${level} | #${rank}`, 400 + (875 - 400) / 2, 230, 322);
 
-      let percent = toPercentage(current, total)
-      if (percent < 40) return canvas.toBufferAsync()
-      let width = (percent -= 40)
+      let percent = toPercentage(current, total);
+      if (percent < 40) return canvas.toBufferAsync();
+      let width = (percent -= 40);
       canvas
          .setShadowColor('transparent')
          .setColor(`${color}`)
          .addCircle(400, 170, 20)
          .addRect(400, 150, width, 40)
-         .addCircle(400 + percent, 170, 20)
+         .addCircle(400 + percent, 170, 20);
 
-      return canvas.toBufferAsync()
+      return canvas.toBufferAsync();
    }
-}
+};
