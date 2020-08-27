@@ -18,9 +18,9 @@ module.exports = class extends Command {
          return msg.sendMessage(`Current Prefix: **${get}**`);
       }
       if (prefix === 'default') return await this.default(msg);
-      if (get === prefix) throw `${this.client.config.error} Prefix is already set to ${prefix}.`;
+      if (get === prefix) throw `${this.client.config.emojis.error} Prefix is already set to ${prefix}.`;
       await msg.guild.settings.update('prefix', prefix);
-      return msg.send(`${this.client.config.success} The prefix for this guild has been set to "${prefix}"`);
+      return msg.send(`${this.client.config.emojis.success} The prefix for this guild has been set to "${prefix}"`);
    }
 
    async default(msg) {
