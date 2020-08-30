@@ -70,7 +70,7 @@ class Levels {
       return;
    }
 
-   async setGuildMemberExp(member, xp, update = false) {
+   async setGuildMemberExp(member, xp, update = true) {
       await member.settings.sync(true);
       if (update) await this.updateUserRoles(member);
       return member.settings.update({
