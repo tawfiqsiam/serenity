@@ -1,4 +1,4 @@
-const { Command } = require('klasa')
+const { Command } = require('klasa');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -8,19 +8,19 @@ module.exports = class extends Command {
          runIn: ['text'],
          description: 'Report the mentioned member.',
          usage: '<member:member> <reason:string> [...]',
-         usageDelim: ' ',
-      })
+         usageDelim: ' '
+      });
    }
 
    async run(msg, [member, ...reason]) {
-      reason = reason.join(' ')
-      const channel = msg.guild.settings.get('channels.report')
-      const reportChannel = msg.guild.channels.get(channel)
+      reason = reason.join(' ');
+      const channel = msg.guild.settings.get('channels.report');
+      const reportChannel = msg.guild.channels.get(channel);
       if (!channel || !reportChannel) {
          let embed = new MessageEmbed()
             .setTitle(`${this.client.config.error} A reports channel hasn't been set yet.`)
-            .setColor(this.client.config.errorColor)
-         return msg.sendMessage(embed)
+            .setColor(this.client.config.errorColor);
+         return msg.sendMessage(embed);
       } else {
          let embed = new MessageEmbed()
             .setTitle('New Report')
@@ -28,19 +28,19 @@ module.exports = class extends Command {
             .addField(`Reported By`, `${msg.author} | ID: ${msg.author.id}`)
             .addField(`Report Reason`, `${reason}\n\n[Jump To Message](${msg.url})`)
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 2048 }).replace('.webp', '.png'))
-            .setColor(this.client.config.defaultColor)
+            .setColor(this.client.config.defaultColor);
          await reportChannel
             .sendMessage(embed)
             .then(async () => {
-               await msg.client.reports.submitReport(msg.guild, msg.author, member, reason)
-               await msg.sendMessage(`${this.client.config.success} Report sent.`)
+               await msg.client.reports.submitReport(msg.guild, msg.author, member, reason);
+               await msg.sendMessage(`${this.client.config.success} Report sent.`);
             })
             .catch((err) => {
-               console.log(err)
+               console.log(err);
                msg.sendMessage(
                   `${this.client.config.error} I don\'t have permissions to send reports to the set channel, please contact a staff member.`
-               )
-            })
+               );
+            });
       }
    }
-}
+};

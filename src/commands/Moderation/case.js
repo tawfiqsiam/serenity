@@ -1,5 +1,5 @@
-const { Command } = require('klasa')
-const { MessageEmbed } = require('discord.js')
+const { Command } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -8,13 +8,13 @@ module.exports = class extends Command {
          permissionLevel: 3,
          runIn: ['text'],
          description: `Displays information about a case.`,
-         usage: '<case:integer>',
-      })
+         usage: '<case:integer>'
+      });
    }
 
    async run(msg, [selected]) {
-      const log = msg.guild.settings.get('data.modlogs')[selected - 1]
-      if (!log) return msg.send(`${this.client.config.emojis.error} I couldn't find that case.`)
+      const log = msg.guild.settings.get('data.modlogs')[selected - 1];
+      if (!log) return msg.send(`${this.client.config.emojis.error} I couldn't find that case.`);
 
       const embed = new MessageEmbed()
          .setColor(this.client.modlog.colour(log.type))
@@ -24,16 +24,16 @@ module.exports = class extends Command {
          .addField(`**Reason**`, log.reason.current)
          .setFooter(`Case ${log.case}`)
          .setAuthor(log.moderator.tag, log.moderator.avatar)
-         .setTimestamp(log.date)
+         .setTimestamp(log.date);
 
       if (log.type === 'mute' || log.type === 'unmute') {
          if (log.duration && log.duration !== null) {
-            if (log.type === 'unmute') embed.addField('**Original Mute Duration**', log.duration)
-            if (log.type === 'mute') embed.addField('**Mute Duration**', log.duration)
+            if (log.type === 'unmute') embed.addField('**Original Mute Duration**', log.duration);
+            if (log.type === 'mute') embed.addField('**Mute Duration**', log.duration);
          }
       }
-      if (log.type === 'unmute' && log.reason.original) embed.addField('**Original Mute Reason**', log.reason.original)
+      if (log.type === 'unmute' && log.reason.original) embed.addField('**Original Mute Reason**', log.reason.original);
 
-      return msg.sendMessage(embed)
+      return msg.sendMessage(embed);
    }
-}
+};

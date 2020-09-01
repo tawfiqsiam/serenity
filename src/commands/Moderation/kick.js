@@ -1,4 +1,4 @@
-const { Command } = require('klasa')
+const { Command } = require('klasa');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -9,27 +9,22 @@ module.exports = class extends Command {
          runIn: ['text'],
          description: `Kicks a user.`,
          usage: '<member:member> [reason:string] [...]',
-         usageDelim: ' ',
-      })
+         usageDelim: ' '
+      });
    }
 
    async run(msg, [member, reason]) {
-      reason = reason.length > 0 ? reason : null
+      reason = reason.length > 0 ? reason : null;
 
       if (member.roles.highest.position >= msg.member.roles.highest.position) {
-         return msg.sendMessage(`${this.client.config.emojis.error} You can't kick someone above you.`)
+         return msg.sendMessage(`${this.client.config.emojis.error} You can't kick someone above you.`);
       } else if (member.kickable === false) {
-         return msg.sendMessage(`${this.client.config.emojis.error} I cannot kick that user.`)
+         return msg.sendMessage(`${this.client.config.emojis.error} I cannot kick that user.`);
       }
 
-      await member.kick(reason)
-      new this.client.modlog(msg.guild)
-         .setType('kick')
-         .setModerator(msg.member)
-         .setUser(member)
-         .setReason({ current: reason })
-         .send()
+      await member.kick(reason);
+      new this.client.modlog(msg.guild).setType('kick').setModerator(msg.member).setUser(member).setReason({ current: reason }).send();
 
-      return msg.sendMessage(`${this.client.config.success} Kicked ${member.user.tag}.`)
+      return msg.sendMessage(`${this.client.config.success} Kicked ${member.user.tag}.`);
    }
-}
+};

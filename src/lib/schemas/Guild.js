@@ -1,14 +1,10 @@
-const { KlasaClient } = require('klasa')
+const { KlasaClient } = require('klasa');
 
 module.exports = KlasaClient.defaultGuildSchema
+   .add('mutedUsers', 'string', { array: true })
    .add('disabledGroups', 'Command-Group', { array: true })
    .add('channels', (folder) =>
-      folder
-         .add('logs', 'string')
-         .add('welcome', 'string')
-         .add('modlog', 'string')
-         .add('ticketlog', 'string')
-         .add('verification', 'string')
+      folder.add('logs', 'string').add('welcome', 'string').add('modlog', 'string').add('ticketlog', 'string').add('verification', 'string')
    )
    .add('messages', (folder) => folder.add('welcome', 'string').add('tickets', 'string'))
    .add('roles', (folder) =>
@@ -20,9 +16,7 @@ module.exports = KlasaClient.defaultGuildSchema
          .add('support', 'string')
    )
    .add('data', (folder) =>
-      folder
-         .add('modlogs', 'any', { array: true, configurable: false })
-         .add('tickets', 'any', { array: true, configurable: false })
+      folder.add('modlogs', 'any', { array: true, configurable: false }).add('tickets', 'any', { array: true, configurable: false })
    )
    .add('colors', (folder) => folder.add('welcomecard', 'hex', { default: '#7B2BC0' }))
    .add('levels', (folder) =>
@@ -51,4 +45,4 @@ module.exports = KlasaClient.defaultGuildSchema
                .add('guild', 'boolean', { default: true })
          )
          .add('nickmute', 'boolean', { default: false })
-   )
+   );
