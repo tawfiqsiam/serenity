@@ -1,4 +1,4 @@
-# Serenity [![CodeFactor](https://www.codefactor.io/repository/github/hellbound1337/serenity/badge)]
+# Serenity ![CodeFactor](https://www.codefactor.io/repository/github/hellbound1337/serenity/badge)
 
 ##### Serenity provides you with an amazing user and staff experience, serenity can be customized in many ways.
 
