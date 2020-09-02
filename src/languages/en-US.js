@@ -6,7 +6,10 @@ module.exports = class extends Language {
 
       const error = this.client.config.emojis.error;
       const success = this.client.config.emojis.success;
-
+      const errorColor = this.client.config.colors.error;
+      const successColor = this.client.config.colors.success;
+      const defaultColor = this.client.config.colors.default;
+      
       this.language = {
          DEFAULT: (key) => `${key} has not been localized for en-US yet.`,
          DEFAULT_LANGUAGE: 'Default Language',
@@ -123,7 +126,14 @@ module.exports = class extends Language {
 
          COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${error} You didn't provide a ${name}.`,
          COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `${error} Missing a required option: (${possibles})`,
-         COMMANDMESSAGE_NOMATCH: (possibles) => `${error} Invalid subcommand or none provided. Options: (${possibles})`,
+         COMMANDMESSAGE_NOMATCH: (possibles) => (prefix, command, possibles) => 
+            new MessageEmbed()
+               .setColor(errorColor)
+               .setTitle(`**Invalid Option**`)
+               .addField(
+                  '__Options__',
+                  possibles.map((p) => `${prefix}${command.name} ${p}`)
+               ),
          MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) =>
             `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join(
                '**, **'
