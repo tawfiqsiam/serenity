@@ -12,7 +12,7 @@
       "d3-format": "^1.4.4",
       "discord.js": "github:discordjs/discord.js#fe7df708e44e0280dfaf0f8e457b154781bb5140",
       "dotenv": "^8.2.0",
-      "klasa": "github:dirigeants/klasa#settings",
+      "klasa": "github:hellbound1337/klasa#settings",
       "klasa-member-gateway": "github:dirigeants/klasa-member-gateway#fix-settings",
       "moment": "^2.26.0",
       "mongodb": "^3.5.7",
