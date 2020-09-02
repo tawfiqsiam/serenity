@@ -16,6 +16,7 @@
       "klasa-member-gateway": "github:dirigeants/klasa-member-gateway#fix-settings",
       "moment": "^2.26.0",
       "mongodb": "^3.5.7",
-      "request": "^2.88.2"
+      "request": "^2.88.2",
+      "statcord.js": "github:hellbound1337/statcord.js"
    }
 }

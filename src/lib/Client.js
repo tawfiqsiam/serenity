@@ -1,9 +1,10 @@
+const Schemas = require('./schemas/Schemas');
+const { Client } = require('statcord.js');
 const { KlasaClient } = require('klasa');
+const Rewards = require('./Rewards');
 const Config = require('../config');
 const Levels = require('./Levels');
-const Rewards = require('./Rewards');
 const Util = require('./Util');
-const Schemas = require('./schemas/Schemas');
 
 module.exports = class SerenityClient extends KlasaClient {
    constructor(options) {
