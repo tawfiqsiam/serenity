@@ -20,7 +20,7 @@ module.exports = class extends Command {
                this.client.guilds.map((g) => g.memberCount).reduce((a, b) => a + b),
                true
             )
-            .addField('Memory Used', (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2), true)
+            .addField('Memory Used', `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true)
             .addField('Uptime', Duration.toNow(Date.now() - process.uptime() * 1000), true)
             .addField('Node.js', process.version, true)
             .addField('Discord.js', discordVersion, true)
