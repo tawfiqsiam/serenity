@@ -1,4 +1,5 @@
 const { Language, util } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Language {
    constructor(...args) {
@@ -9,7 +10,7 @@ module.exports = class extends Language {
       const errorColor = this.client.config.colors.error;
       const successColor = this.client.config.colors.success;
       const defaultColor = this.client.config.colors.default;
-      
+
       this.language = {
          DEFAULT: (key) => `${key} has not been localized for en-US yet.`,
          DEFAULT_LANGUAGE: 'Default Language',
@@ -19,8 +20,7 @@ module.exports = class extends Language {
                   ? `es for this guild are: ${prefix.map((pre) => `\`${pre}\``).join(', ')}`
                   : ` in this guild is set to: \`${prefix}\``
             }`,
-         RESOLVER_MULTI_TOO_FEW: (name, min = 1) =>
-            `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
+         RESOLVER_MULTI_TOO_FEW: (name, min = 1) => `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
          RESOLVER_INVALID_HEX: `${error} You provided an invalid hex.`,
          RESOLVER_INVALID_SEEK: `${error} You provided an invalid seek time. Examples: 00:30, 30:00, 01:30:00`,
          PAGE: 'Page',
@@ -63,8 +63,7 @@ module.exports = class extends Language {
          COMMAND_RANKUP_DESCRIPTION: `Manages the rank-up behaviour.`,
          COMMAND_RANKUP_NO_POSSIBLES: (possibles) => `${error} Invalid or no option provided. Options: (${possibles})`,
          COMMAND_RANKUP_NO_ACCESS: `${error} I don't have access to that channel.`,
-         COMMAND_RANKUP_TOGGLE_SUCCESS: (boolean) =>
-            `${success} The rank-up message has been toggled ${boolean ? 'on' : 'off'}.`,
+         COMMAND_RANKUP_TOGGLE_SUCCESS: (boolean) => `${success} The rank-up message has been toggled ${boolean ? 'on' : 'off'}.`,
          COMMAND_RANKUP_MODE_EXISTS: (mode) => `${error} The rankup message type is already set to ${mode}.`,
          COMMAND_RANKUP_MODE_SUCCESS: (mode) => `${success} The rankup message type has been set to ${mode}.`,
          COMMAND_RANKUP_MESSAGE_EXISTS: (message) => `${error} The rankup message is already set to \`${message}\``,
@@ -126,12 +125,12 @@ module.exports = class extends Language {
 
          COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${error} You didn't provide a ${name}.`,
          COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `${error} Missing a required option: (${possibles})`,
-         COMMANDMESSAGE_NOMATCH: (possibles) => (prefix, command, possibles) => 
+         COMMANDMESSAGE_NOMATCH: (prefix, command, possibles) =>
             new MessageEmbed()
-               .setColor(errorColor)
+               .setColor(defaultColor)
                .setTitle(`**Invalid Option**`)
                .addField(
-                  '__Options__',
+                  'Options',
                   possibles.map((p) => `${prefix}${command.name} ${p}`)
                ),
          MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) =>
@@ -144,9 +143,7 @@ module.exports = class extends Language {
             )}** to cancel this prompt.`,
          MONITOR_COMMAND_HANDLER_ABORTED: `Aborted`,
          INHIBITOR_COOLDOWN: (remaining) =>
-            `${error} You have just used this command. You can use this command again in ${remaining} second${
-               remaining === 1 ? '' : 's'
-            }.`,
+            `${error} You have just used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
          INHIBITOR_DISABLED_GUILD: `${error} This command has been disabled by an admin in this guild.`,
          INHIBITOR_DISABLED_GLOBAL: `${error} This command has been globally disabled by the bot owner.`,
          INHIBITOR_MISSING_BOT_PERMS: (missing) => `${error} Insufficient permissions, missing: **${missing}**`,
@@ -180,14 +177,11 @@ module.exports = class extends Language {
          ].join('\n'),
          COMMAND_EVAL_ERROR: (time, output, type) => `**Error**:${output}\n**Type**:${type}\n${time}`,
          COMMAND_EVAL_OUTPUT: (time, output, type) => `**Output**:${output}\n**Type**:${type}\n${time}`,
-         COMMAND_EVAL_SENDFILE: (time, type) =>
-            `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
-         COMMAND_EVAL_SENDCONSOLE: (time, type) =>
-            `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
+         COMMAND_EVAL_SENDFILE: (time, type) => `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
+         COMMAND_EVAL_SENDCONSOLE: (time, type) => `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
          COMMAND_UNLOAD: (type, name) => `✅ Unloaded ${type}: ${name}`,
          COMMAND_UNLOAD_DESCRIPTION: 'Unloads the klasa piece.',
-         COMMAND_UNLOAD_WARN:
-            "You probably don't want to unload that, since you wouldn't be able to run any command to enable it again",
+         COMMAND_UNLOAD_WARN: "You probably don't want to unload that, since you wouldn't be able to run any command to enable it again",
          COMMAND_RELOAD: (type, name, time) => `✅ Reloaded ${type}: ${name}. (Took: ${time})`,
          COMMAND_RELOAD_FAILED: (type, name) => `❌ Failed to reload ${type}: ${name}. Please check your Console.`,
          COMMAND_RELOAD_ALL: (type, time) => `✅ Reloaded all ${type}. (Took: ${time})`,
@@ -196,10 +190,8 @@ module.exports = class extends Language {
          COMMAND_REBOOT: 'Rebooting...',
          COMMAND_REBOOT_DESCRIPTION: 'Reboots the bot.',
          COMMAND_LOAD: (time, type, name) => `✅ Successfully loaded ${type}: ${name}. (Took: ${time})`,
-         COMMAND_LOAD_FAIL:
-            'The file does not exist, or an error occurred while loading your file. Please check your console.',
-         COMMAND_LOAD_ERROR: (type, name, error) =>
-            `❌ Failed to load ${type}: ${name}. Reason:${util.codeBlock('js', error)}`,
+         COMMAND_LOAD_FAIL: 'The file does not exist, or an error occurred while loading your file. Please check your console.',
+         COMMAND_LOAD_ERROR: (type, name, error) => `❌ Failed to load ${type}: ${name}. Reason:${util.codeBlock('js', error)}`,
          COMMAND_LOAD_DESCRIPTION: 'Load a piece from your bot.',
          COMMAND_PING: 'Ping?',
          COMMAND_PING_DESCRIPTION: 'Runs a connection test to Discord.',
@@ -230,13 +222,11 @@ module.exports = class extends Language {
          COMMAND_HELP_NODM: "❌ | You have DMs disabled, I couldn't send you the commands in DMs.",
          COMMAND_HELP_EXTENDED: 'Extended Help ::',
          COMMAND_ENABLE: (type, name) => `+ Successfully enabled ${type}: ${name}`,
-         COMMAND_ENABLE_DESCRIPTION:
-            'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state restored on reboot.',
+         COMMAND_ENABLE_DESCRIPTION: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state restored on reboot.',
          COMMAND_DISABLE: (type, name) => `+ Successfully disabled ${type}: ${name}`,
          COMMAND_DISABLE_DESCRIPTION:
             'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state restored on reboot.',
-         COMMAND_DISABLE_WARN:
-            "You probably don't want to disable that, since you wouldn't be able to run any command to enable it again",
+         COMMAND_DISABLE_WARN: "You probably don't want to disable that, since you wouldn't be able to run any command to enable it again",
          COMMAND_CONF_NOKEY: 'You must provide a key',
          COMMAND_CONF_NOVALUE: 'You must provide a value',
          COMMAND_CONF_GUARDED: (name) => `${util.toTitleCase(name)} may not be disabled.`,
