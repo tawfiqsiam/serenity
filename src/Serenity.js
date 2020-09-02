@@ -4,12 +4,9 @@ const { Client } = require('statcord.js');
 
 const client = new SerenityClient(options);
 
-client.statcord = new Client({
-   client,
-   key: process.env.statcordKey,
-   postCpuStatistics: false,
-   postMemStatistics: false,
-   postNetworkStatistics: false
+client.statcord = new Client({ 
+   client: client, 
+   key: process.env.statcordKey 
 });
 
 client.statcord.on('autopost-start', () => {
