@@ -21,38 +21,38 @@
 ## Commands
 - *levels
 - *levels global
-<br>
+
 - *rank 
 - *rank [user]
 - *rank global
 - *rank global [user]
-<br>
+
 - *ignore add [channel]
 - *ignore add [channel] [xp:yes/no] [commands:yes/no]
 - *ignore remove [channel]
 - *ignore list
-<br>
+
 - *multiplier 0.5
 - *multiplier 1.0
 - *multiplier 1.5
 - *multiplier 2.0
-<br>
+
 - *rankcard [color]
 - *rankcard reset
-<br>
+
 - *rankup toggle
 - *rankup mode text
 - *rankup mode embed
 - *rankup text [text]
 - *rankup channel current
 - *rankup channel [channel]
-<br>
+
 - *reward add [role] [level]
 - *reward remove [role]
 - *reward list
-<br>
+
 - *prefix [prefix]
-<br>
+
 - *transfer
 
 ## Support
