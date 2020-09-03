@@ -12,6 +12,8 @@ module.exports = class extends Command {
    }
 
    async run(msg, [time, ...message]) {
+      const days = Math.ceil(new Date(time).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
+      if (days > 90) throw `${this.client.config.emojis.error} You can't set a reminder for over 3 months.`;
       const r = await this.client.schedule.create('reminder', time, {
          data: {
             channel: msg.channel.id,
