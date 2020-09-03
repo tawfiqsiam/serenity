@@ -24,6 +24,7 @@ exports.colors = {
 };
 
 exports.options = {
+   restTimeOffset: 0,
    prefix: this.prefix,
    commandEditing: true,
    createPiecesFolders: false,
