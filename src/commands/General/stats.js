@@ -12,7 +12,7 @@ module.exports = class extends Command {
    async run(msg) {
       msg.sendMessage(
          new MessageEmbed()
-            .addField('Guild Count', this.client.guilds.size, true)
+            .addField('Server Count', this.client.guilds.size, true)
             .addField('Channel Count', this.client.channels.size, true)
             .addField('Cached User Count', this.client.users.size, true)
             .addField(
