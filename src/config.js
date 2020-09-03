@@ -6,7 +6,8 @@ exports.db = process.env.db;
 exports.prefix = '*';
 
 exports.tokens = {
-   bot: process.env.botToken
+   bot: process.env.botToken,
+   statcord: process.env.statcordKey
 };
 
 exports.emojis = {
@@ -35,6 +36,9 @@ exports.options = {
          name: `*help`,
          type: 'WATCHING'
       }
+   },
+   schedule: {
+      interval: 15000
    },
    pieceDefaults: {
       commands: {
