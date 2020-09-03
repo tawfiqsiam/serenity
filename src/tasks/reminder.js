@@ -1,11 +1,19 @@
 const { Task } = require('klasa');
 
 module.exports = class extends Task {
-   async run({ channel, user, text }) {
-      const _channel = this.client.channels.fetch(channel).catch(console.error);
-      const _user = await this.client.users.fetch(user).catch(console.error);
+   async run({ channel: _channel, user: _user, text }) {
+      const channel = this.client.channels.fetch(_channel).catch(() => null);
+      const user = await this.client.users.fetch(_user).catch(() => null);
 
-      if (_user) return _user.send(`⏰ **Reminder:** ${text}`).catch(console.error);
-      if (_channel) return _channel.send(`📘 | <@${user}>, **Reminder:** ${text}`).catch(console.error);
+      if (!channel) {
+         if (user) {
+            return user.send(`⏰ **Reminder:** ${text}`).catch(() => null);
+         }
+      }
+
+      const member = channel.guild.members.fetch(user.id).catch(() => null);
+      if (channel && member) {
+         return channel.send(`📘 | <@${user}>, **Reminder:** ${text}`).catch(() => null);
+      }
    }
 };
