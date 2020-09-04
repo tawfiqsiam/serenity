@@ -2,11 +2,11 @@ const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 
 const humanLevels = {
-   0: 'None',
-   1: 'Low',
-   2: 'Medium',
-   3: 'High',
-   4: 'Highest'
+   'NONE': 'None',
+   'LOW': 'Low',
+   'MEDIUM': 'Medium',
+   'HIGH': 'High',
+   'VERY_HIGH': 'Very High'
 };
 
 const regions = {
