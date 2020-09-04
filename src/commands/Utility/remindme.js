@@ -21,6 +21,6 @@ module.exports = class extends Command {
             text: message.join(' ')
          }
       });
-      return msg.sendLocale('COMMAND_REMINDME_SUCESS');
+      return msg.sendLocale('COMMAND_REMINDME_SUCCESS');
    }
 };

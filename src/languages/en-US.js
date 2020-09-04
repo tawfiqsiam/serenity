@@ -100,6 +100,7 @@ module.exports = class extends Language {
          COMMAND_HELP_NO_COOLDOWN: 'No Cooldown.',
          COMMAND_DESCRIPTION: 'Description',
          COMMAND_USAGE: 'Usage',
+         COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
          COMMAND_HELP_EXTENDED_HELP: `Extended Help`,
          COMMAND_HELP_COMMANDS: `Commands`,
          COMMAND_HELP_DESCRIPTION: `Displays the bot's commands.`,

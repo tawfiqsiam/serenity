@@ -31,7 +31,7 @@ module.exports = class extends Command {
          permLevel: 0,
          requiredPermissions: ['EMBED_LINKS'],
          description: 'Gives you a random answer to a question.',
-         usage: '<question:string>'
+         usage: '<question:...string>'
       });
    }
 
