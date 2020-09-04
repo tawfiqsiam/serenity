@@ -213,7 +213,7 @@ module.exports = class extends Language {
          RESOLVER_MINMAX_MIN: (name, min, suffix) => `${error} ${name} must be greater than ${min} ${suffix}.`,
          RESOLVER_MINMAX_MAX: (name, max, suffix) => `${error} ${name} must be less than ${max} ${suffix}.`,
 
-         COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${error} The parameter ${name} wasn't provided.`,
+         COMMANDMESSAGE_MISSING_REQUIRED: (name) => `${error} The parameter \`${name}\` wasn't provided.`,
          COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `${error} Missing a required option: (${possibles})`,
          COMMANDMESSAGE_NOMATCH: (prefix, command, possibles) =>
             new MessageEmbed()
