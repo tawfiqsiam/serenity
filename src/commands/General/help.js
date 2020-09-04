@@ -88,7 +88,7 @@ module.exports = class extends Command {
 
    formatCommand(msg, prefix, richDisplay, command) {
       const description = isFunction(command.description) ? command.description(msg.language) : command.description;
-      return richDisplay ? `• ${prefix}${command.name} → ${description}` : `• **${prefix}${command.name}** → ${description}`;
+      return richDisplay ? `• ${prefix}${command.name} → ${description}` : `• ${prefix}${command.name} → ${description}`;
    }
 
    async _fetchCommands(msg) {
