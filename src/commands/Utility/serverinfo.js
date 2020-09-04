@@ -45,7 +45,7 @@ module.exports = class extends Command {
          ])
          .addField('🚶 __**Member Info**__', [`• Members: ${msg.guild.memberCount}`, `• Owner: ${msg.guild.owner.user.tag}`])
          .addField('❓ __**Other**__', [
-            `• Roles: ${msg.guild.roles.size}`,
+            `• Roles: ${msg.guild.roles.cache.size}`,
             `• Region: ${regions[msg.guild.region]}`,
             `• Created at: ${msg.guild.createdAt.toUTCString()}`,
             `• Verification Level: ${humanLevels[msg.guild.verificationLevel]}`
