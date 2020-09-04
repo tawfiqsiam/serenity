@@ -1,5 +1,5 @@
-const { Command, Duration, version: klasaVersion } = require('@serenity/core');
-const { MessageEmbed, version: discordVersion } = require('discord.js');
+const { Command, Duration, version } = require('@serenity/core');
+const { MessageEmbed, version: djsVersion } = require('discord.js');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -23,8 +23,8 @@ module.exports = class extends Command {
             .addField('Memory Used', `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true)
             .addField('Uptime', Duration.toNow(Date.now() - process.uptime() * 1000), true)
             .addField('Node.js', process.version.replace('v', ''), true)
-            .addField('Discord.js', discordVersion, true)
-            .addField('Serenity', klasaVersion, true)
+            .addField('Discord.js', djsVersion, true)
+            .addField('Serenity', version, true)
             .setColor(this.client.config.colors.default)
       );
    }
