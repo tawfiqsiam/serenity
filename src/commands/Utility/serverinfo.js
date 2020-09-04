@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 
 const humanLevels = {
@@ -38,8 +38,8 @@ module.exports = class extends Command {
       let embed = new MessageEmbed()
          .setColor(this.client.config.colors.default)
          .addField('🔒 __**Channels**__', [
-            `• ${msg.guild.channels.filter((ch) => ch.type === 'text').size} Text, ${
-               msg.guild.channels.filter((ch) => ch.type === 'voice').size
+            `• ${msg.guild.channels.cache.filter((ch) => ch.type === 'text').size} Text, ${
+               msg.guild.channels.cache.filter((ch) => ch.type === 'voice').size
             } Voice`,
             `• AFK: ${msg.guild.afkChannelID ? `<#${msg.guild.afkChannelID}> after ${msg.guild.afkTimeout / 60}min` : 'None.'}`
          ])

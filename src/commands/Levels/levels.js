@@ -1,4 +1,4 @@
-const { Command, CommandStore, KlasaMessage } = require('klasa');
+const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 const d3 = require('d3-format');
 const format = (number) => (number > 999 ? d3.format('.3s')(number) : number);
@@ -31,16 +31,14 @@ module.exports = class extends Command {
                let levelExp = msg.client.levels.getLevelExp(level);
                let progress = msg.client.levels.getLevelProgress(item.exp);
                let langLevel = msg.language.get('COMMAND_LEVELS_LEVEL');
-               return `**${filteredData.indexOf(item) + 1}.** <@${item.member}> - ${langLevel} ${level} (${format(
-                  progress
-               )}/${format(levelExp)})\n`;
+               return `**${filteredData.indexOf(item) + 1}.** <@${item.member}> - ${langLevel} ${level} (${format(progress)}/${format(levelExp)})\n`;
             })
          )
          .setColor(this.client.config.colors.default)
          .setFooter(
-            `${filteredData.length} ${msg.language.get('COMMAND_LEVELS_USERS')} | ${msg.language.get('PAGE')} ${
-               leaderboard.page
-            }/${leaderboard.maxPage}`
+            `${filteredData.length} ${msg.language.get('COMMAND_LEVELS_USERS')} | ${msg.language.get('PAGE')} ${leaderboard.page}/${
+               leaderboard.maxPage
+            }`
          )
          .setTimestamp(Date.now());
       await msg.sendMessage(embed);
@@ -62,16 +60,14 @@ module.exports = class extends Command {
                let levelExp = msg.client.levels.getLevelExp(level);
                let progress = msg.client.levels.getLevelProgress(item.exp);
                let langLevel = msg.language.get('COMMAND_LEVELS_LEVEL');
-               return `**${filteredData.indexOf(item) + 1}.** ${item.tag} - ${langLevel} ${level} (${format(
-                  progress
-               )} /${format(levelExp)})\n`;
+               return `**${filteredData.indexOf(item) + 1}.** ${item.tag} - ${langLevel} ${level} (${format(progress)} /${format(levelExp)})\n`;
             })
          )
          .setColor(this.client.config.colors.default)
          .setFooter(
-            `${filteredData.length} ${msg.language.get('COMMAND_LEVELS_USERS')} | ${msg.language.get('PAGE')} ${
-               leaderboard.page
-            }/${leaderboard.maxPage}`
+            `${filteredData.length} ${msg.language.get('COMMAND_LEVELS_USERS')} | ${msg.language.get('PAGE')} ${leaderboard.page}/${
+               leaderboard.maxPage
+            }`
          )
          .setTimestamp(Date.now());
       await msg.sendMessage(embed);

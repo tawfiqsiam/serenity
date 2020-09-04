@@ -1,11 +1,11 @@
-const { Argument } = require('klasa');
+const { Argument } = require('@serenity/core');
 
 module.exports = class extends Argument {
    async run(arg, possible, msg) {
       if (!arg) throw msg.language.get('COMMANDMESSAGE_MISSING_REQUIRED', possible.name);
       const matches = this.getMatches(arg);
       if (!matches) throw msg.language.get('RESOLVER_INVALID_HEX');
-      return matches;
+      return matches[0];
    }
 
    getMatches(input) {

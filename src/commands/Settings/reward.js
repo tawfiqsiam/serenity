@@ -1,4 +1,4 @@
-const { Command, CommandStore, KlasaMessage } = require('klasa');
+const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
@@ -24,28 +24,28 @@ module.exports = class extends Command {
    }
 
    async add(msg, [role, level]) {
-      let ignores = await this.client.rewards.getGuildRewards(msg.guild);
+      let ignores = await this.getGuildRewards(msg.guild);
       if (await ignores.find((o) => o.role === role)) {
          throw msg.language.get('COMMAND_REWARD_ADD_EXISTS');
       }
       if (role.rawPosition <= msg.guild.me.roles.highest.rawPosition) {
-         await this.client.rewards.addGuildReward(msg.guild, role.id, level);
+         await this.addGuildReward(msg.guild, role.id, level);
          return msg.sendLocale('COMMAND_REWARD_ADD_SUCCESS');
       }
       throw msg.language.get('COMMAND_REWARD_ADD_ERROR');
    }
 
    async remove(msg, [role]) {
-      let rewards = await this.client.rewards.getGuildRewards(msg.guild);
+      let rewards = await this.getGuildRewards(msg.guild);
       if (!(await rewards.find((o) => o.role === role))) {
          throw msg.language.get('COMMAND_REWARD_REMOVE_NO_EXISTS');
       }
-      await this.client.rewards.removeGuildReward(msg.guild, role.id);
+      await this.removeGuildReward(msg.guild, role.id);
       return msg.sendLocale('COMMAND_REWARD_REMOVE_SUCCESS');
    }
 
    async list(msg) {
-      let rewards = await this.client.rewards.getGuildRewards(msg.guild);
+      let rewards = await this.getGuildRewards(msg.guild);
 
       if (rewards.length == 0) {
          throw msg.language.get('COMMAND_REWARD_LIST_NONE');
@@ -62,5 +62,36 @@ module.exports = class extends Command {
          )
          .setColor(this.client.config.colors.default);
       return msg.sendMessage(embed);
+   }
+
+   async getGuildRewards(guild) {
+      let rewards = await guild.settings.get('levels.rewards');
+      let result = [];
+      for (const reward of rewards) {
+         let check = await guild.roles.cache.get(reward.role);
+         if (!check || guild.me.roles.highest.rawPosition < check.rawPosition) {
+            await this.removeGuildReward(guild, reward.role);
+         } else {
+            result.push({ role: check, level: reward.level });
+         }
+      }
+      return result;
+   }
+
+   async addGuildReward(guild, role, level) {
+      let rewards = await guild.settings.get('levels.rewards');
+      let object = {
+         role: role,
+         level: level
+      };
+      await guild.settings.update('levels.rewards', object, { action: 'add' });
+      return true;
+   }
+
+   async removeGuildReward(guild, role) {
+      let rewards = await guild.settings.get('levels.rewards');
+      let i = rewards.find((i) => i.role === role);
+      await guild.settings.update('levels.rewards', i, { action: 'remove' });
+      return true;
    }
 };

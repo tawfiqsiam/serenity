@@ -1,4 +1,4 @@
-const { Command, Stopwatch, Type, util } = require('klasa');
+const { Command, Stopwatch, Type, util } = require('@serenity/core');
 const { inspect } = require('util');
 
 module.exports = class extends Command {
@@ -18,22 +18,13 @@ module.exports = class extends Command {
    async run(message, [code]) {
       const { success, result, time, type } = await this.eval(message, code);
       const footer = util.codeBlock('ts', type);
-      const output = message.language.get(
-         success ? 'COMMAND_EVAL_OUTPUT' : 'COMMAND_EVAL_ERROR',
-         time,
-         util.codeBlock('js', result),
-         footer
-      );
+      const output = message.language.get(success ? 'COMMAND_EVAL_OUTPUT' : 'COMMAND_EVAL_ERROR', time, util.codeBlock('js', result), footer);
 
       if ('silent' in message.flagArgs) return null;
 
       if (output.length > 2000) {
          if (message.guild && message.channel.attachable) {
-            return message.channel.sendFile(
-               Buffer.from(result),
-               'output.txt',
-               message.language.get('COMMAND_EVAL_SENDFILE', time, footer)
-            );
+            return message.channel.sendFile(Buffer.from(result), 'output.txt', message.language.get('COMMAND_EVAL_SENDFILE', time, footer));
          }
          this.client.emit('log', result);
          return message.sendLocale('COMMAND_EVAL_SENDCONSOLE', [time, footer]);

@@ -1,7 +1,7 @@
 const {
    Argument,
    util: { regExpEsc }
-} = require('klasa');
+} = require('@serenity/core');
 const { GuildMember, User } = require('discord.js');
 const USER_REGEXP = Argument.regex.userOrMember;
 
@@ -13,7 +13,7 @@ module.exports = class extends Argument {
 
       const results = [];
       const reg = new RegExp(regExpEsc(arg), 'i');
-      for (const member of msg.guild.members.values()) {
+      for (const member of msg.guild.members.cache.values()) {
          if (reg.test(member.user.username)) results.push(member);
       }
 
@@ -42,7 +42,7 @@ module.exports = class extends Argument {
       if (typeof query === 'string') {
          if (USER_REGEXP.test(query)) return guild.members.fetch(USER_REGEXP.exec(query)[1]).catch(() => null);
          if (/\w{1,32}#\d{4}/.test(query)) {
-            const res = guild.members.find((member) => member.user.tag.toLowerCase() === query.toLowerCase());
+            const res = guild.members.cache.find((member) => member.user.tag.toLowerCase() === query.toLowerCase());
             return res || null;
          }
       }

@@ -26,11 +26,9 @@ exports.colors = {
 exports.options = {
    restTimeOffset: 0,
    prefix: this.prefix,
-   commandEditing: true,
    createPiecesFolders: false,
    owners: this.owners,
-   disabledEvents: ['TYPING_START', 'PRESENCE_UPDATE', 'TYPING_STOP'],
-   disabledCorePieces: ['commands', 'providers', 'languages'],
+   disabledCorePieces: ['languages'],
    providers: { default: 'mongodb' },
    presence: {
       activity: {

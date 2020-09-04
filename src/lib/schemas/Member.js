@@ -1,6 +1,6 @@
-const { KlasaClient } = require('klasa');
-const MGateway = require('klasa-member-gateway');
+const { Client } = require('@serenity/core');
+const MGateway = require('@serenity/mg');
 
-KlasaClient.use(MGateway);
+Client.use(MGateway);
 
-module.exports = KlasaClient.defaultMemberSchema.add('exp', 'integer', { default: 0 });
+module.exports = Client.defaultMemberSchema.add('exp', 'integer', { default: 0 });

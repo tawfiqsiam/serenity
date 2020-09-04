@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 
 const fortunes = [

@@ -1,4 +1,4 @@
-const { Event } = require('klasa');
+const { Event } = require('@serenity/core');
 
 module.exports = class extends Event {
    run(msg, command, params, error) {

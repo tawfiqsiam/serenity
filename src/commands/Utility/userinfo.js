@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
@@ -11,7 +11,7 @@ module.exports = class extends Command {
    }
 
    async run(msg, [user = msg.author]) {
-      let member = msg.guild.members.get(user.id);
+      let member = msg.guild.members.cache.get(user.id);
       let createdTime = new Date(user.createdAt).toUTCString();
       let embed = new MessageEmbed()
          .addField('🚶 **User Info**', [
@@ -25,7 +25,7 @@ module.exports = class extends Command {
       if (member) {
          embed.addField('🛡️ **Server Info**', [
             `• Nickname: ${member.nickname ? member.nickname : 'No nickname.'}`,
-            `• Roles: ${member.roles
+            `• Roles: ${member.roles.cache
                .filter((r) => r.name !== '@everyone')
                .map((role) => `\`${role.name}\``)
                .join(', ')}`,

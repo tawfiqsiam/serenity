@@ -1,11 +1,11 @@
-const { Extendable } = require('klasa');
-const { KlasaMember } = require('klasa-member-gateway');
+const { Extendable } = require('@serenity/core');
+const { SerenityMember } = require('@serenity/mg');
 
 module.exports = class ArgonGuild extends Extendable {
    constructor(...args) {
       super(...args, {
-         name: 'Member',
-         appliesTo: [KlasaMember]
+         name: 'SerenityMember',
+         appliesTo: [SerenityMember]
       });
    }
 

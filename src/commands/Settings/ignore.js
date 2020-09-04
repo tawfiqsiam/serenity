@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Command {
@@ -43,12 +43,8 @@ module.exports = class extends Command {
             ignores
                .map((ignore) => {
                   return `**${ignore.channel}**
-            ${msg.language.get('COMMAND_IGNORE_XPGAIN')} ${
-                     ignore.xp ? this.client.config.emojis.success : this.client.config.emojis.error
-                  }
-            ${msg.language.get('COMMAND_IGNORE_COMMANDS')} ${
-                     ignore.commands ? this.client.config.emojis.success : this.client.config.emojis.error
-                  }`;
+            ${msg.language.get('COMMAND_IGNORE_XPGAIN')} ${ignore.xp ? this.client.config.emojis.success : this.client.config.emojis.error}
+            ${msg.language.get('COMMAND_IGNORE_COMMANDS')} ${ignore.commands ? this.client.config.emojis.success : this.client.config.emojis.error}`;
                })
                .join('\n\n')
          )
@@ -57,10 +53,10 @@ module.exports = class extends Command {
    }
 
    async getIgnores(guild) {
-      let ignores = await guild.settings.get('ignores');
+      let ignores = await guild.settings.get('levels.ignores');
       let result = [];
       for (const ignore of ignores) {
-         let check = await guild.channels.get(ignore.channel);
+         let check = await guild.channels.cache.get(ignore.channel);
          if (!check) {
             await this.removeIgnore(guild, ignore.channel);
          } else {
@@ -72,14 +68,14 @@ module.exports = class extends Command {
 
    async addIgnore(guild, channel, xp, commands) {
       let object = { channel: channel, commands: commands, xp: xp };
-      await guild.settings.update('ignores', object, { arrayAction: 'add' });
+      await guild.settings.update('levels.ignores', object, { action: 'add' });
       return true;
    }
 
    async removeIgnore(guild, channel) {
-      let ignores = await guild.settings.get('ignores');
+      let ignores = await guild.settings.get('levels.ignores');
       let i = ignores.find((i) => i.channel === channel);
-      await guild.settings.update('ignores', i, { arrayAction: 'remove' });
+      await guild.settings.update('levels.ignores', i, { action: 'remove' });
       return true;
    }
 };

@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -16,7 +16,7 @@ module.exports = class extends Command {
          return msg.sendLocale('COMMAND_RANKCARD_DEFAULT_SUCCESS');
       }
       if (check == color) throw msg.language.get('COMMAND_RANKCARD_EXISTS', color);
-      await msg.author.settings.update('rankcard', color);
+      await msg.author.settings.update('rankcard', color[0]);
       return msg.sendLocale('COMMAND_RANKCARD_SUCCESS', [color]);
    }
 };

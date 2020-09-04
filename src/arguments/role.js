@@ -1,4 +1,4 @@
-const { Argument, util, Possible, KlasaMessage, KlasaGuild } = require('klasa');
+const { Argument, util } = require('@serenity/core');
 const { Role } = require('discord.js');
 
 module.exports = class extends Argument {
@@ -9,7 +9,7 @@ module.exports = class extends Argument {
       if (resRole) return resRole;
       const results = [];
       const reg = new RegExp(util.regExpEsc(arg), 'i');
-      for (const role of msg.guild.roles.values()) {
+      for (const role of msg.guild.roles.cache.values()) {
          if (reg.test(role.name)) results.push(role);
       }
       let querySearch;
@@ -32,9 +32,8 @@ module.exports = class extends Argument {
    }
 
    resolveRole(query, guild) {
-      if (query instanceof Role) return guild.roles.has(query.id) ? query : null;
-      if (typeof query === 'string' && Argument.regex.role.test(query))
-         return guild.roles.get(Argument.regex.role.exec(query)[1]);
+      if (query instanceof Role) return guild.roles.cache.has(query.id) ? query : null;
+      if (typeof query === 'string' && Argument.regex.role.test(query)) return guild.roles.cache.get(Argument.regex.role.exec(query)[1]);
       return null;
    }
 };

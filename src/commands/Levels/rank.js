@@ -1,6 +1,6 @@
 const { MessageAttachment } = require('discord.js');
 const { Canvas } = require('canvas-constructor');
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 const fetch = require('node-fetch');
 const d3 = require('d3-format');
 const toPercentage = (current, total) => Math.round((current / total) * 515);
@@ -26,20 +26,11 @@ module.exports = class extends Command {
       const currentLevelExp = await msg.client.levels.getLevelProgress(currentExp);
 
       if (currentExp == 0) {
-         throw msg.member.id === member.id
-            ? msg.language.get('COMMAND_RANK_SELF_UNRANKED')
-            : msg.language.get('COMMAND_RANK_USER_UNRANKED');
+         throw msg.member.id === member.id ? msg.language.get('COMMAND_RANK_SELF_UNRANKED') : msg.language.get('COMMAND_RANK_USER_UNRANKED');
       }
 
       const attachment = new MessageAttachment(
-         await this.generate(
-            currentLevelExp,
-            levelExp,
-            currentRank,
-            currentLevel,
-            member.user,
-            member.user.settings.get('rankcard')
-         )
+         await this.generate(currentLevelExp, levelExp, currentRank, currentLevel, member.user, member.user.settings.get('rankcard'))
       );
       msg.sendMessage(attachment);
    }
@@ -56,20 +47,11 @@ module.exports = class extends Command {
       const currentLevelExp = await msg.client.levels.getLevelProgress(currentExp);
 
       if (currentExp == 0) {
-         throw msg.member.id === member.id
-            ? msg.language.get('COMMAND_RANK_SELF_UNRANKED')
-            : msg.language.get('COMMAND_RANK_USER_UNRANKED');
+         throw msg.member.id === member.id ? msg.language.get('COMMAND_RANK_SELF_UNRANKED') : msg.language.get('COMMAND_RANK_USER_UNRANKED');
       }
 
       const attachment = new MessageAttachment(
-         await this.generate(
-            currentLevelExp,
-            levelExp,
-            currentRank,
-            currentLevel,
-            member.user,
-            member.user.settings.get('rankcard')
-         )
+         await this.generate(currentLevelExp, levelExp, currentRank, currentLevel, member.user, member.user.settings.get('rankcard'))
       );
       return msg.sendMessage(attachment);
    }

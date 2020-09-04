@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 
 module.exports = class extends Command {
    constructor(...args) {

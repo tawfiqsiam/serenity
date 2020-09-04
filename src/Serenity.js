@@ -1,6 +1,6 @@
 const SerenityClient = require('./lib/Client');
 const { tokens, options } = require('./config');
-const { Client } = require('statcord.js');
+const { Client } = require('@serenity/statcord');
 
 const client = new SerenityClient(options);
 

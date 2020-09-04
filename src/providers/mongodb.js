@@ -1,8 +1,7 @@
-// Copyright (c) 2017-2019 dirigeants. All rights reserved. MIT license.
 const {
    Provider,
    util: { mergeDefault, mergeObjects, isObject }
-} = require('klasa');
+} = require('@serenity/core');
 const { MongoClient: Mongo } = require('mongodb');
 
 module.exports = class extends Provider {
@@ -13,8 +12,8 @@ module.exports = class extends Provider {
 
    async init() {
       const mongoClient = await Mongo.connect(this.client.config.db, { useNewUrlParser: true, useUnifiedTopology: true });
+      this.client.console.log('Loaded mongo provider.');
       this.db = mongoClient.db(this.client.options.providers.db);
-      this.client.console.log(`Loaded mongo provider.`);
    }
 
    get exec() {
@@ -70,9 +69,7 @@ module.exports = class extends Provider {
    }
 
    update(table, id, doc) {
-      return this.db
-         .collection(table)
-         .updateOne(resolveQuery(id), { $set: isObject(doc) ? flatten(doc) : parseEngineInput(doc) });
+      return this.db.collection(table).updateOne(resolveQuery(id), { $set: isObject(doc) ? flatten(doc) : parseEngineInput(doc) });
    }
 
    replace(table, id, doc) {
@@ -92,5 +89,5 @@ function flatten(obj, path = '') {
 }
 
 function parseEngineInput(updated) {
-   return Object.assign({}, ...updated.map(({ entry, next }) => ({ [entry.path]: next })));
+   return Object.assign({}, ...updated.map((entry) => ({ [entry.data[0]]: entry.data[1] })));
 }

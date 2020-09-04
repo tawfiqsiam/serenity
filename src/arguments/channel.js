@@ -1,7 +1,7 @@
 const {
    Argument,
    util: { regExpEsc }
-} = require('klasa');
+} = require('@serenity/core');
 const { Channel, Message } = require('discord.js');
 
 module.exports = class extends Argument {
@@ -13,7 +13,7 @@ module.exports = class extends Argument {
 
       const results = [];
       const reg = new RegExp(regExpEsc(arg), 'i');
-      for (const channel of msg.guild.channels.values()) {
+      for (const channel of msg.guild.channels.cache.values()) {
          if (reg.test(channel.name)) results.push(channel);
       }
 
@@ -37,10 +37,9 @@ module.exports = class extends Argument {
    }
 
    resolveChannel(query, guild) {
-      if (query instanceof Channel) return guild.channels.has(query.id) ? query : null;
+      if (query instanceof Channel) return guild.channels.cache.has(query.id) ? query : null;
       if (query instanceof Message) return query.guild.id === guild.id ? query.channel : null;
-      if (typeof query === 'string' && Argument.regex.channel.test(query))
-         return guild.channels.get(Argument.regex.channel.exec(query)[1]);
+      if (typeof query === 'string' && Argument.regex.channel.test(query)) return guild.channels.cache.get(Argument.regex.channel.exec(query)[1]);
       return null;
    }
 };

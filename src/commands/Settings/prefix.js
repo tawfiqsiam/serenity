@@ -1,5 +1,4 @@
-const { Command } = require('klasa');
-const { MessageEmbed } = require('discord.js');
+const { Command } = require('@serenity/core');
 
 module.exports = class extends Command {
    constructor(...args) {

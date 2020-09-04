@@ -1,4 +1,4 @@
-const { Command } = require('klasa');
+const { Command } = require('@serenity/core');
 
 module.exports = class extends Command {
    constructor(...args) {
@@ -15,7 +15,7 @@ module.exports = class extends Command {
       });
    }
 
-   async guild(msg, [member, level]) {
+   async guild(msg, [member = msg.member, level]) {
       const exp = await msg.client.levels.getExpFromLevel(level);
       setTimeout(async () => {
          await msg.client.levels
@@ -29,7 +29,7 @@ module.exports = class extends Command {
       }, 200);
    }
 
-   async global(msg, [user, level]) {
+   async global(msg, [user = msg.author, level]) {
       const exp = await msg.client.levels.getExpFromLevel(level);
       setTimeout(async () => {
          await msg.client.levels

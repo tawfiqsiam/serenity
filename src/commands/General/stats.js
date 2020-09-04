@@ -1,4 +1,4 @@
-const { Command, Duration, version: klasaVersion } = require('klasa');
+const { Command, Duration, version: klasaVersion } = require('@serenity/core');
 const { MessageEmbed, version: discordVersion } = require('discord.js');
 
 module.exports = class extends Command {
@@ -12,19 +12,19 @@ module.exports = class extends Command {
    async run(msg) {
       msg.sendMessage(
          new MessageEmbed()
-            .addField('Server Count', this.client.guilds.size, true)
-            .addField('Channel Count', this.client.channels.size, true)
-            .addField('Cached User Count', this.client.users.size, true)
+            .addField('Server Count', this.client.guilds.cache.size, true)
+            .addField('Channel Count', this.client.channels.cache.size, true)
+            .addField('Cached User Count', this.client.users.cache.size, true)
             .addField(
                'Member Count',
-               this.client.guilds.map((g) => g.memberCount).reduce((a, b) => a + b),
+               this.client.guilds.cache.map((g) => g.memberCount).reduce((a, b) => a + b),
                true
             )
             .addField('Memory Used', `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true)
             .addField('Uptime', Duration.toNow(Date.now() - process.uptime() * 1000), true)
-            .addField('Node.js', process.version, true)
+            .addField('Node.js', process.version.replace('v', ''), true)
             .addField('Discord.js', discordVersion, true)
-            .addField('Klasa', klasaVersion, true)
+            .addField('Serenity', klasaVersion, true)
             .setColor(this.client.config.colors.default)
       );
    }

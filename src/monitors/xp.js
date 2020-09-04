@@ -1,4 +1,4 @@
-const { Monitor } = require('klasa');
+const { Monitor } = require('@serenity/core');
 
 module.exports = class extends Monitor {
    constructor(...args) {
@@ -16,7 +16,7 @@ module.exports = class extends Monitor {
    async run(msg) {
       await this.client.levels.giveGlobalExp(msg.author);
       if (!msg.guild) return;
-      let check = await msg.guild.settings.get('ignores');
+      let check = await msg.guild.settings.get('levels.ignores');
       if (await check.find((o) => o.channel === msg.channel.id && o.xp === false)) return;
       await this.client.levels.giveGuildUserExp(msg.member, msg);
    }

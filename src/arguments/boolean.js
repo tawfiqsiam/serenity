@@ -1,4 +1,4 @@
-const { Argument } = require('klasa');
+const { Argument } = require('@serenity/core');
 const truths = ['1', 'true', '+', 't', 'yes', 'y', 'on'];
 const falses = ['0', 'false', '-', 'f', 'no', 'n', 'off'];
 
