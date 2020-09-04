@@ -23,13 +23,13 @@ module.exports = class extends Command {
    async run(msg, [command]) {
       if (command) {
          let embed = new MessageEmbed()
-            .setColor(this.client.config.defaultColor)
+            .setColor(this.client.config.colors.default)
             .setTitle(command.name)
             .addField(`Description`, isFunction(command.description) ? command.description(msg.language) : command.description)
             .addField(`Usage`, command.usage.fullUsage(msg))
             .addField(`Extended Help`, isFunction(command.extendedHelp) ? command.extendedHelp(msg.language) : command.extendedHelp)
             .addField(`NSFW`, command.nsfw ? `Yes` : `No`)
-            .addField(`Cooldown`, command.cooldown ? command.cooldown : `No cooldown.`);
+            .addField(`Cooldown`, command.cooldown ? `${command.cooldown}s` : `No cooldown.`);
          return msg.channel.send(embed);
       }
 
