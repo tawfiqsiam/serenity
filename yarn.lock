@@ -16,19 +16,19 @@
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-"@serenity/core@github:SerenityBot/core":
+"@serenity/core@serenitybot/core":
   version "1.0.0"
-  resolved "https://codeload.github.com/SerenityBot/core/tar.gz/97d0b58cd47f5ff867e27ca2ba8817f802b956c1"
+  resolved "https://codeload.github.com/serenitybot/core/tar.gz/97d0b58cd47f5ff867e27ca2ba8817f802b956c1"
   dependencies:
     fs-nextra "^0.4.7"
 
-"@serenity/mg@github:SerenityBot/mg":
+"@serenity/mg@serenitybot/mg":
   version "1.0.0"
-  resolved "https://codeload.github.com/SerenityBot/mg/tar.gz/3258ff3b044dcb9f69f9a95bb9c5aad292ce7c31"
+  resolved "https://codeload.github.com/serenitybot/mg/tar.gz/3258ff3b044dcb9f69f9a95bb9c5aad292ce7c31"
 
-"@serenity/statcord@github:SerenityBot/statcord":
+"@serenity/statcord@serenitybot/statcord":
   version "1.0.0"
-  resolved "https://codeload.github.com/SerenityBot/statcord/tar.gz/8619338477855db428ca35cac62e4b8fdbbf3197"
+  resolved "https://codeload.github.com/serenitybot/statcord/tar.gz/8619338477855db428ca35cac62e4b8fdbbf3197"
   dependencies:
     node-fetch "^2.6.0"
     systeminformation "^4.26.9"
