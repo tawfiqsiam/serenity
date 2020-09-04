@@ -6,14 +6,17 @@ module.exports = class extends Command {
       super(...args, {
          aliases: ['av'],
          requiredPermissions: ['EMBED_LINKS'],
-         description: 'Displays the users avatar.',
+         description: (language) => language.get('COMMAND_AVATAR_DESCRIPTION'),
          usage: '[user:user]'
       });
    }
 
    async run(msg, [user = msg.author]) {
       return msg.sendMessage(
-         new MessageEmbed().setImage(user.getAvatar()).setTitle(`${user.tag}'s avatar`).setColor(this.client.config.colors.default)
+         new MessageEmbed()
+            .setImage(user.getAvatar())
+            .setTitle(msg.language.get('COMMAND_AVATAR_PLURAL', user.tag))
+            .setColor(this.client.config.colors.default)
       );
    }
 };

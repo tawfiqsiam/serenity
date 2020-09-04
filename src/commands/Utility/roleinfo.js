@@ -5,7 +5,7 @@ module.exports = class extends Command {
    constructor(...args) {
       super(...args, {
          requiredPermissions: ['EMBED_LINKS', 'USE_EXTERNAL_EMOJIS'],
-         description: 'Displays information about a role.',
+         description: (language) => language.get('COMMAND_ROLEINFO_DESCRIPTION'),
          usage: '<role:role>'
       });
    }
@@ -14,25 +14,21 @@ module.exports = class extends Command {
       return msg.sendEmbed(
          new MessageEmbed()
             .setColor(role.hexColor)
-            .addField('• Name', role.name, true)
-            .addField('• ID', role.id, true)
-            .addField('• Color', role.hexColor, true)
-            .addField('• Members', role.members.size, true)
-            .addField('• Hoisted', role.hoist ? 'Yes' : 'No', true)
-            .addField('• Mentionable', role.mentionable ? 'Yes' : 'No', true)
+            .addField(`• ${msg.language.get('NAME')}`, role.name, true)
+            .addField(`• ${msg.language.get('ID')}`, role.id, true)
+            .addField(`• ${msg.language.get('COLOR')}`, role.hexColor, true)
+            .addField(`• ${msg.language.get('MEMBERS')}`, role.members.size, true)
+            .addField(`• ${msg.language.get('HOISTED')}`, role.hoist ? msg.language.get('YES') : msg.language.get('NO'), true)
+            .addField(`• ${msg.language.get('MENTIONABLE')}`, role.mentionable ? msg.language.get('YES') : msg.language.get('NO'), true)
             .addField(
-               `• Permission(s)`,
+               `• ${msg.language.get('PERMISSIONS')}`,
                role.permissions.toArray().length
                   ? role.permissions
                        .toArray()
-                       .map((p) => this.formatPermission(p))
+                       .map((p) => msg.language.get(permission))
                        .join(', ')
-                  : 'None'
+                  : msg.language.get('NONE')
             )
       );
-   }
-
-   formatPermission(permission) {
-      return this.client.util.permissions[permission];
    }
 };

@@ -5,7 +5,7 @@ module.exports = class extends Command {
       super(...args, {
          aliases: ['remindme', 'setreminder', 'remindmein'],
          requiredPermissions: ['USE_EXTERNAL_EMOJIS'],
-         description: 'Make the bot remind you of something at a certain time.',
+         description: (language) => language.get('COMMAND_REMINDME_DESCRIPTION'),
          usage: '<time:time> <message:string> [...]',
          usageDelim: ' '
       });
@@ -13,7 +13,7 @@ module.exports = class extends Command {
 
    async run(msg, [time, ...message]) {
       const days = Math.ceil(new Date(time).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24);
-      if (days > 90) throw `${this.client.config.emojis.error} You can't set a reminder for over 3 months.`;
+      if (days > 90) throw msg.language.get('COMMAND_REMINDME_TOO_LONG');
       const r = await this.client.schedule.create('reminder', time, {
          data: {
             channel: msg.channel.id,
@@ -21,6 +21,6 @@ module.exports = class extends Command {
             text: message.join(' ')
          }
       });
-      return msg.channel.send(`${this.client.config.emojis.success} Created reminder.`);
+      return msg.sendLocale('COMMAND_REMINDME_SUCESS');
    }
 };
