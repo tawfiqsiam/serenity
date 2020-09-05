@@ -25,7 +25,7 @@ module.exports = class extends Command {
                role.permissions.toArray().length
                   ? role.permissions
                        .toArray()
-                       .map((p) => msg.language.get(permission))
+                       .map((p) => msg.language.get(p))
                        .join(', ')
                   : msg.language.get('NONE')
             )
