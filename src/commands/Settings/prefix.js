@@ -14,12 +14,12 @@ module.exports = class extends Command {
    async run(msg, [prefix]) {
       const get = msg.guild.settings.get('prefix');
       if (!prefix) {
-         return msg.sendMessage(`Current Prefix: **${get}**`, { allowedMentions: { parse: [] } });
+         return msg.sendMessage(`Current Prefix: **${get}**`);
       }
       if (prefix === 'default') return await this.default(msg);
-      if (get === prefix) throw msg.send(`${this.client.config.emojis.error} Prefix is already set to ${prefix}.`, { allowedMentions: { parse: [] } });
+      if (get === prefix) throw msg.send(`${this.client.config.emojis.error} Prefix is already set to ${prefix}.`);
       await msg.guild.settings.update('prefix', prefix);
-      return msg.send(`${this.client.config.emojis.success} The prefix for this guild has been set to "${prefix}"`, { allowedMentions: { parse: [] } });
+      return msg.send(`${this.client.config.emojis.success} The prefix for this guild has been set to "${prefix}"`);
    }
 
    async default(msg) {

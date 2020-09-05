@@ -6,12 +6,12 @@ module.exports = class extends Task {
       const user = await this.client.users.fetch(_user);
 
       if (!channel && user) {
-         return user.send(`⏰ **Reminder:** ${text}`, { allowedMentions: { parse: [] } }).catch(() => null);
+         return user.send(`⏰ **Reminder:** ${text}`).catch(() => null);
       }
 
       if (channel && channel.guild.members.fetch(user.id)) {
-         return channel.send(`📘 | ${user}, **Reminder:** ${text}`, { allowedMentions: { parse: [] } }).catch(() => {
-            return user.send(`⏰ **Reminder:** ${text}`, { allowedMentions: { parse: [] } }).catch(() => null);
+         return channel.send(`📘 | ${user}, **Reminder:** ${text}`).catch(() => {
+            return user.send(`⏰ **Reminder:** ${text}`).catch(() => null);
          });
       }
    }

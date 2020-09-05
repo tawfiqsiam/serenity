@@ -29,6 +29,7 @@ exports.options = {
    createPiecesFolders: false,
    owners: this.owners,
    disabledCorePieces: ['languages'],
+   disableMentions: 'everyone',
    providers: { default: 'mongodb' },
    presence: {
       activity: {
