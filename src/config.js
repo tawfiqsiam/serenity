@@ -11,10 +11,10 @@ exports.tokens = {
 };
 
 exports.emojis = {
-   success: '<:success:713079769155240006>',
-   error: '<:error:713079768723226674>',
-   loading: '<a:loading:713079771495530596>',
-   rankUp: '<:up:695688887779196990>'
+   success: '<:success:720905509758173247>',
+   error: '<:error:720905509758173247>',
+   loading: '<a:loading:720905509758173247>',
+   rankUp: '<:up:720905509758173247>'
 };
 
 exports.colors = {
